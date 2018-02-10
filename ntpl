@@ -11,22 +11,17 @@ let data = {
 }
 
 ntpl
-  .version('0.1.2', '-v, --version')
+  .version('0.1.5', '-v, --version')
   .option('-t, --template <file ...>', 'kubernetes template yaml', templateReader)
   .option('-p, --parameters <file ...>', 'parameters yaml', parametersReader)
-  .option('-u, --unsafe <file ...>', 'unsafe parameters yaml', unsafeParametersReader)
   .parse(process.argv);
 
-function templateReader(path){
-  data.tpl = fs.readFileSync(path, 'utf8');
+function templateReader(filePath){
+  data.tpl = fs.readFileSync(filePath, 'utf8');
 }
 
-function parametersReader(path) {
-  data.params = yaml.safeLoad(fs.readFileSync(path, 'utf8'));
-}
-
-function unsafeParametersReader(path) {
-  data.params = yaml.load(fs.readFileSync(path, 'utf8'));
+function parametersReader(filePath) {
+  data.params = yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 
 console.log(Mustache.render(data.tpl, data.params))

@@ -8,4 +8,4 @@ push-%: build
 	docker push ikerry/ntpl:latest
 
 compile: build
-	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -u ./tpls/unsafe-params.yaml
+	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -u ./tpls/params.yaml

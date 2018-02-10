@@ -26,14 +26,13 @@ Options:
   -v, --version                output the version number
   -t, --template <file ...>    kubernetes template yaml
   -p, --parameters <file ...>  parameters yaml
-  -u, --unsafe <file ...>      unsafe parameters yaml
-  -h, --help                   output usage information  
+  -h, --help                   output usage information
 ```
 
 ## Docker image
 
 ```
-docker pull ikerry/ntpl
+docker pull ikerry/ntpl:latest
 ```
 
 ## Quick start
@@ -76,35 +75,6 @@ name: kube-demo
 namespace: kube-demo
 service: kube-demo-app
 cluster: cluster.com.au
-runtime: static-string
-```
-
-
-- Generate template
-
-```
-docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -p ./tpls/params.yaml
-```
-
-
-- Apply to kubernetes
-
-
-```
-docker run --rm -v $(pwd):/app -v $HOME/.kube:/root/.kube -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -p ./tpls/params.yaml | kubectl apply -f -
-```
-
-
-## Edge Case
-
-- Parameters Example
-
-```
----
-name: kube-demo
-namespace: kube-demo
-service: kube-demo-app
-cluster: kerry.cluster.com.au
 runtime: !!js/function |
   function (){
     return "Hello World"
@@ -115,5 +85,13 @@ runtime: !!js/function |
 - Generate template
 
 ```
-docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -u ./tpls/unsafe-params.yaml
+docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml
+```
+
+
+- Apply to kubernetes
+
+
+```
+docker run --rm -v $(pwd):/app -v $HOME/.kube:/root/.kube -w /app ikerry/ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml | kubectl apply -f -
 ```

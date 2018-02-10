@@ -12,6 +12,6 @@ WORKDIR /node/app
 
 ADD ntpl /node/app
 ADD package.json /node/app
-RUN npm install && mv ntpl /usr/local/bin/ && mv node_modules /usr/local/bin/
+RUN chmod +x ntpl && npm install && mv ntpl /usr/local/bin/ && mv node_modules /usr/local/bin/
 
 ENTRYPOINT ["ntpl"]

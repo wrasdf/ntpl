@@ -1,9 +1,0 @@
----
-name: kube-demo
-namespace: kube-demo
-service: kube-demo-app
-cluster: kerry.cluster.com.au
-runtime: !!js/function |
-  function (){
-    return "Hello World"
-  }
