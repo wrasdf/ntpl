@@ -1,0 +1,24 @@
+{
+  "name": "ntpl",
+  "version": "0.1.5",
+  "description": "nodejs kubernetes template engine",
+  "main": "ntpl",
+  "scripts": {
+    "test": ""
+  },
+  "keywords": [
+    "node",
+    "kubernetes",
+    "template",
+    "k8s",
+    "kube",
+    "ntpl"
+  ],
+  "author": "wrasdf@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.14.0",
+    "js-yaml": "^3.10.0",
+    "mustache": "^2.3.0"
+  }
+}

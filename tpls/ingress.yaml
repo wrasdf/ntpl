@@ -1,0 +1,25 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{name}}
+  namespace: {{namespace}}
+  labels:
+    app: {{name}}
+    purpose: {{name}}-policy
+    runtime: {{runtime}}
+  annotations:
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    - demo-app.{{cluster}}
+    secretName: {{name}}-tls
+  rules:
+  - host: demo-app.{{cluster}}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{service}}
+          servicePort: 80
