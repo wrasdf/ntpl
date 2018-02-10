@@ -18,7 +18,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## Synopsis
 
 ```
-ntpl version 0.1.2
+ntpl version 0.1.5
 
 Usage: ntpl [options]
 Options:
@@ -83,7 +83,7 @@ runtime: static-string
 - Generate template
 
 ```
-docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.2 -t ./tpls/ingress.yaml -p ./tpls/params.yaml
+docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -p ./tpls/params.yaml
 ```
 
 
@@ -91,7 +91,7 @@ docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.2 -t ./tpls/ingress.yaml 
 
 
 ```
-docker run --rm -v $(pwd):/app -v $HOME/.kube:/root/.kube -w /app ikerry/ntpl:0.1.2 -t ./tpls/ingress.yaml -p ./tpls/params.yaml | kubectl apply -f -
+docker run --rm -v $(pwd):/app -v $HOME/.kube:/root/.kube -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -p ./tpls/params.yaml | kubectl apply -f -
 ```
 
 
@@ -115,5 +115,5 @@ runtime: !!js/function |
 - Generate template
 
 ```
-docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.2 -t ./tpls/ingress.yaml -u ./tpls/unsafe-params.yaml
+docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:0.1.5 -t ./tpls/ingress.yaml -u ./tpls/unsafe-params.yaml
 ```
