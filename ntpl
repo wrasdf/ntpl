@@ -11,7 +11,7 @@ let data = {
 }
 
 ntpl
-  .version('0.1.5', '-v, --version')
+  .version('0.2.0', '-v, --version')
   .option('-t, --template <file ...>', 'kubernetes template yaml', templateReader)
   .option('-p, --parameters <file ...>', 'parameters yaml', parametersReader)
   .parse(process.argv);

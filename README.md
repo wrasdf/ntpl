@@ -7,7 +7,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## What's inside the Docker image
 
 - node:8.9.4-alpine
-- ntpl:0.1.5
+- ntpl:0.2.0
 - kubectl:1.8.0
 - jq
 - make
@@ -18,7 +18,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## Synopsis
 
 ```
-ntpl version 0.1.5
+ntpl version 0.2.0
 
 Usage: ntpl [options]
 Options:
