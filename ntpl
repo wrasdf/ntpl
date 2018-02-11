@@ -1,9 +1,11 @@
 #!/usr/bin/env node
 
 const ntpl = require('commander'),
-    yaml = require('js-yaml'),
-    Mustache = require('mustache');
-    fs = require('fs');
+    Mustache = require('mustache'),
+    fs = require('fs'),
+    util = require('./utils/utility')
+
+const supportList = ['yaml', 'yml', 'json'];
 
 let data = {
   tpl: ``,
@@ -13,7 +15,8 @@ let data = {
 ntpl
   .version('0.2.0', '-v, --version')
   .option('-t, --template <file ...>', 'kubernetes template yaml', templateReader)
-  .option('-p, --parameters <file ...>', 'parameters yaml', parametersReader)
+  .option('-p, --parameters <file ...>', 'parameters file (yaml|json)', parametersReader)
+  .option('-e, --env <key>', 'environment value', envReader)
   .parse(process.argv);
 
 function templateReader(filePath){
@@ -21,7 +24,12 @@ function templateReader(filePath){
 }
 
 function parametersReader(filePath) {
-  data.params = yaml.load(fs.readFileSync(filePath, 'utf8'));
+  utility.isInSupportList(filePath, supportList);
+  data.params = utility.paramsReader(filePath);
+}
+
+function envReader(key) {
+  data.params[key] = process.env[key]
 }
 
 console.log(Mustache.render(data.tpl, data.params))

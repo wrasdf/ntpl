@@ -8,6 +8,7 @@ metadata:
     app: {{name}}
     purpose: {{name}}-policy
     runtime: {{runtime}}
+    env: {{USER}}
   annotations:
     kubernetes.io/tls-acme: "true"
 spec:
