@@ -1,0 +1,3 @@
+name: "kube-demo"
+namespace: "kube-demo"
+runtime: "hello world"

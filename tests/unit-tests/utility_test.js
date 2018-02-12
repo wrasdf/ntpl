@@ -1,8 +1,11 @@
 let expect = require('chai').expect,
-    utils = require('../utils/utility')
+    utils = require('../../utils/utility')
 
 
 describe("utility", ()=>{
+
+  let jsonPath = './tests/unit-tests/test.json',
+      yamlPath = './tests/unit-tests/test.yaml'
 
   it("should return correct file extname", ()=>{
     expect(utils.getFileExtensionName('test.yaml')).to.equal('yaml');
@@ -20,11 +23,11 @@ describe("utility", ()=>{
   })
 
   it("should return correct json values", ()=>{
-    expect(utils.paramsReader("./tests/test.json").test).to.equal('Value from json')
+    expect(utils.paramsReader(jsonPath).test).to.equal('Value from json')
   })
 
   it("should return correct yaml values", ()=> {
-    expect(utils.paramsReader("./tests/test.yaml").test).to.equal('Value from yaml')
+    expect(utils.paramsReader(yamlPath).test).to.equal('Value from yaml')
   })
 
 })

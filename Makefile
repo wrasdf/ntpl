@@ -10,5 +10,8 @@ push-%: build
 compile: build
 	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml
 
-test: build
-	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest test
+ut: build
+	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest run ut
+
+ft: build
+	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest run ft

@@ -4,7 +4,8 @@
   "description": "nodejs kubernetes template engine",
   "main": "ntpl",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha ./tests/*"
+    "ut": "./node_modules/mocha/bin/mocha ./tests/unit-tests/*",
+    "ft": "./node_modules/mocha/bin/mocha ./tests/function-tests/*"
   },
   "keywords": [
     "node",

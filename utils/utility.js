@@ -15,7 +15,7 @@ function isInSupportList(filePath, list) {
 }
 
 function paramsReader(filePath) {
-  if (getFileExtensionName(filePath) == 'json'){
+  if (getFileExtensionName(filePath) === 'json'){
     return JSON.parse(fs.readFileSync(filePath, 'utf8'))
   }
   return yaml.load(fs.readFileSync(filePath, 'utf8'));
