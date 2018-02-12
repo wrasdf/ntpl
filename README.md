@@ -18,7 +18,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## Synopsis
 
 ```
-ntpl version 0.2.0
+ntpl version 0.2.1
 
 Usage: ntpl [options]
 Options:
@@ -26,6 +26,7 @@ Options:
   -v, --version                output the version number
   -t, --template <file ...>    kubernetes template yaml
   -p, --parameters <file ...>  parameters yaml
+  -e, --env <key>              environment key
   -h, --help                   output usage information
 ```
 

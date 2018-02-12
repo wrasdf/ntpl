@@ -13,7 +13,7 @@ let data = {
 }
 
 ntpl
-  .version('0.2.0', '-v, --version')
+  .version('0.2.1', '-v, --version')
   .option('-t, --template <file ...>', 'kubernetes template yaml', templateReader)
   .option('-p, --parameters <file ...>', 'parameters file (yaml|json)', parametersReader)
   .option('-e, --env <key>', 'environment value', envReader)
@@ -24,8 +24,8 @@ function templateReader(filePath){
 }
 
 function parametersReader(filePath) {
-  utility.isInSupportList(filePath, supportList);
-  data.params = utility.paramsReader(filePath);
+  util.isInSupportList(filePath, supportList);
+  data.params = util.paramsReader(filePath);
 }
 
 function envReader(key) {

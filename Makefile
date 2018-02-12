@@ -8,7 +8,7 @@ push-%: build
 	docker push ikerry/ntpl:latest
 
 compile: build
-	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -u ./tpls/params.yaml
+	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml
 
-test:
-	npm test
+test: build
+	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest test
