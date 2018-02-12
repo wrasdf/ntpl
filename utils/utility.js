@@ -11,6 +11,7 @@ function isInSupportList(filePath, list) {
   if (list.indexOf(getFileExtensionName(filePath)) < 0) {
     throw new Error(`Only support ${list}`)
   }
+  return true
 }
 
 function paramsReader(filePath) {

@@ -9,3 +9,6 @@ push-%: build
 
 compile: build
 	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -u ./tpls/params.yaml
+
+test:
+	npm test
