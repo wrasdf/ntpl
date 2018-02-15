@@ -1,5 +1,5 @@
 {
   "name": "kube-demo",
   "namespace": "kube-demo",
-  "runtime": "Hello world"
+  "runtime": "Hello World"
 }

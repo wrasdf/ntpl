@@ -1,4 +1,6 @@
 
+'use strict';
+
 const fs = require('fs'),
     path = require('path'),
     yaml = require('js-yaml');

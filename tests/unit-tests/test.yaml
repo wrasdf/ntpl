@@ -1,2 +1,2 @@
-test: "Value from yaml"
-testa: "asdf"
+---
+test: Value from yaml
