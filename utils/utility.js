@@ -2,7 +2,8 @@
 
 const fs = require('fs'),
     path = require('path'),
-    yaml = require('js-yaml');
+    yaml = require('js-yaml'),
+    exec = require('child_process')
 
 function getFileExtensionName(filePath) {
   return path.extname(filePath).replace('\.', '').toLowerCase();
@@ -22,8 +23,34 @@ function paramsReader(filePath) {
   return yaml.load(fs.readFileSync(filePath, 'utf8'));
 }
 
+function createDirectory(directory){
+  exec(`mkdir -p ${directory}`, ()=> {
+    return true
+  })
+  // try {
+  //   fs.statSync(directory);
+  // } catch(e) {
+  //   fs.mkdirSync(directory);
+  // }
+}
+
+function deleteDirectory(directory){
+  exec('rm -rf directory')
+}
+
+//
+// fs.readdir(path, function(err, items) {
+//     console.log(items);
+//
+//     for (var i=0; i<items.length; i++) {
+//         console.log(items[i]);
+//     }
+// });
+
 module.exports = {
   isInSupportList: isInSupportList,
   getFileExtensionName: getFileExtensionName,
-  paramsReader: paramsReader
+  paramsReader: paramsReader,
+  createDirectory: createDirectory,
+  deleteDirectory: deleteDirectory
 }
