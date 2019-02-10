@@ -2,34 +2,114 @@
 
 const ntpl = require('commander'),
     Mustache = require('mustache'),
-    fs = require('fs'),
-    util = require('./utils/utility')
-
-const supportList = ['yaml', 'yml', 'json'];
+    utils = require('./utils/utility'),
+    shell = require('shelljs'),
+    supportList = ['yaml', 'yml'];
 
 let data = {
-  tpl: ``,
-  params: ``
+  component: '',
+  params: {}
 }
 
 ntpl
-  .version('0.2.1', '-v, --version')
-  .option('-t, --template <file ...>', 'kubernetes template yaml', templateReader)
-  .option('-p, --parameters <file ...>', 'parameters file (yaml|json)', parametersReader)
-  .option('-e, --env <key>', 'environment value', envReader)
+  .version('0.3.0', '-v, --version')
+  .option('-c, --component <file ...>', 'kubernetes component', componentReader)
+  .option('-p, --parameters <file ...>', 'parameters file (yaml|yml)', parametersReader)
+
+ntpl
+  .command('compile')
+  .description('Compile kubernetes templates.')
+  .action(() => {
+    kubeCompile()
+  })
+
+ntpl
+  .command('validate')
+  .description('Validate kubernetes templates.')
+  .action(() => {
+    kubeCompile().then(() => kubeValidate())
+  })
+
+ntpl
+  .command('apply')
+  .description('Apply templates into kubernetes.')
+  .action(() => {
+    kubeCompile().then(() => kubeApply())
+  })
+
+ntpl
+  .command('delete')
+  .description('Delete templates from kubernetes')
+  .action(() => {
+    kubeCompile().then(() => kubeDelete())
+  })
+
+ntpl
   .parse(process.argv);
 
-function templateReader(filePath){
-  data.tpl = fs.readFileSync(filePath, 'utf8');
-}
-
 function parametersReader(filePath) {
-  util.isInSupportList(filePath, supportList);
-  data.params = util.paramsReader(filePath);
+  utils.isInSupportList(filePath, supportList)
+  utils.paramsReader(filePath).then(paramsObj => Object.assign(data.params, paramsObj))
 }
 
-function envReader(key) {
-  data.params[key] = process.env[key]
+function componentReader(component){
+  data.component = component;
 }
 
-console.log(Mustache.render(data.tpl, data.params))
+function kubeCompile() {
+  const buildPath = "_build",
+        componentFolderPath = "templates/" + data.component;
+
+  return utils
+  .clean(buildPath)
+  .then(() => utils.mkdir(buildPath + "/" + data.component))
+  .then(() => utils.readdir(componentFolderPath))
+  .then(files => {
+    return Promise.all(files.map(file => {
+      return utils.readfile(componentFolderPath + "/" + file).then(content => {
+        return Mustache.render(content, data.params)
+      }).then(content => {
+        return utils.appendFile(buildPath + "/" + data.component + "/" + file, content)
+      })
+    }))
+  })
+  .catch(err => { throw new Error(err) })
+}
+
+function buildComponentFolderReader(component) {
+  const buildFolderPath = "_build/" + component;
+  return utils.readdir(buildFolderPath)
+}
+
+function kubeValidate() {
+  const buildFolderPath = "_build/" + data.component
+  buildComponentFolderReader(data.component)
+  .then(files => {
+    return files.map(file => {
+      return shell.exec('kubectl apply --validate --dry-run  -f ' + buildFolderPath + '/' +file)
+    })
+  })
+  .catch(err => { throw new Error(err) })
+}
+
+function kubeApply() {
+  const buildFolderPath = "_build/" + data.component
+  buildComponentFolderReader(data.component)
+  .then(files => {
+    return files.map(file => {
+      return shell.exec('kubectl apply -f ' + buildFolderPath + '/' +file)
+    })
+  })
+  .catch(err => { throw new Error(err) })
+}
+
+function kubeDelete() {
+  const buildFolderPath = "_build/" + data.component
+  buildComponentFolderReader(data.component)
+  .then(files => {
+    return files.map(file => {
+      return shell.exec('kubectl delete -f ' + buildFolderPath + '/' +file)
+    })
+  })
+  .catch(err => { throw new Error(err) })
+}

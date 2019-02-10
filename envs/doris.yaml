@@ -1,0 +1,8 @@
+---
+name: ntpl-demo
+repo: ntpl
+namespace: platform-enablement
+dns_name: kerry.cluster.com.au
+container: ikerry/metrics-node
+version: latest
+containerPort: 8080

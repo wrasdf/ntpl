@@ -1,19 +1,21 @@
-FROM node:8.9.4-alpine
+FROM node:11.9.0-alpine
 
-RUN apk add --update make curl jq bash openssl \
+RUN apk add --update curl bash \
   && rm -rf /var/cache/apk/*
 
-ENV KUBECTLVERSION v1.8.0
+ENV KUBECTLVERSION v1.13.3
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTLVERSION}/bin/linux/amd64/kubectl
 RUN chmod +x kubectl
 RUN mv kubectl /usr/local/bin/
 
-WORKDIR /node/app
+WORKDIR /app
+COPY package*.json /app/
+RUN npm install
+COPY . /app/
 
-ADD ntpl /node/app
-ADD package.json /node/app
-ADD utils /node/app/utils
-RUN chmod +x ntpl && npm install
-RUN mv ntpl /usr/local/bin/ && mv utils /usr/local/bin/ && mv node_modules /usr/local/bin/
+RUN chmod +x ntpl && \
+    mv ntpl /usr/local/bin/ && \
+    mv utils /usr/local/bin/ && \
+    mv node_modules /usr/local/bin/
 
 ENTRYPOINT ["ntpl"]

@@ -1,0 +1,18 @@
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{name}}
+  namespace: {{namespace}}
+  labels:
+    app: {{name}}
+    repo: {{repo}}
+  annotations:
+    prometheus.io/scrape: "true"
+spec:
+  ports:
+    - port: 80
+      targetPort: {{containerPort}}
+  selector:
+    app: {{name}}
+    repo: {{repo}}

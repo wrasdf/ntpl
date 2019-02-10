@@ -2,8 +2,8 @@
 
 const fs = require('fs'),
     path = require('path'),
-    yaml = require('js-yaml'),
-    exec = require('child_process')
+    shell = require('shelljs'),
+    yaml = require('js-yaml');
 
 function getFileExtensionName(filePath) {
   return path.extname(filePath).replace('\.', '').toLowerCase();
@@ -16,41 +16,54 @@ function isInSupportList(filePath, list) {
   return true
 }
 
-function paramsReader(filePath) {
-  if (getFileExtensionName(filePath) === 'json'){
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'))
-  }
-  return yaml.load(fs.readFileSync(filePath, 'utf8'));
+function delay(t) {
+  return new Promise(resolve => setTimeout(resolve, t));
 }
 
-function createDirectory(directory){
-  exec(`mkdir -p ${directory}`, ()=> {
-    return true
+function mkdir(directory) {
+  return new Promise(resolve => {
+    shell.mkdir('-p', directory);
+    return resolve(true);
   })
-  // try {
-  //   fs.statSync(directory);
-  // } catch(e) {
-  //   fs.mkdirSync(directory);
-  // }
 }
 
-function deleteDirectory(directory){
-  exec('rm -rf directory')
+function rmdir(directory) {
+  return new Promise(resolve => {
+    shell.rm('-rf', directory);
+    return resolve(true);
+  })
 }
 
-//
-// fs.readdir(path, function(err, items) {
-//     console.log(items);
-//
-//     for (var i=0; i<items.length; i++) {
-//         console.log(items[i]);
-//     }
-// });
+function paramsReader(filePath) {
+  return readfile(filePath).then(
+    content => yaml.load(content, 'utf8')
+  ).catch(err => { throw new Error(err) })
+}
+
+async function readdir(directory) {
+  return await fs.promises.readdir(directory);
+}
+
+async function readfile(path) {
+  return await fs.promises.readFile(path,'utf8');
+}
+
+async function appendFile(path, content) {
+  return await fs.promises.appendFile(path, content, 'utf8');
+}
+
+function clean(directory) {
+  return rmdir(directory).then(() => mkdir(directory))
+}
 
 module.exports = {
   isInSupportList: isInSupportList,
   getFileExtensionName: getFileExtensionName,
+  delay: delay,
   paramsReader: paramsReader,
-  createDirectory: createDirectory,
-  deleteDirectory: deleteDirectory
+  appendFile: appendFile,
+  mkdir: mkdir,
+  clean: clean,
+  readdir: readdir,
+  readfile: readfile
 }

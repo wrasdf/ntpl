@@ -7,11 +7,5 @@ push-%: build
 	docker push ikerry/ntpl:$(*)
 	docker push ikerry/ntpl:latest
 
-compile: build
-	docker run --rm -v $(shell pwd):/app -w /app ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml
-
-ut: build
-	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest run ut
-
-ft: build
-	docker run --rm -v $(shell pwd):/app -w /app --entrypoint "npm" ntpl:latest run ft
+sh: build
+	docker run -it -w /app -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube --entrypoint "/bin/bash" ntpl:latest
