@@ -16,10 +16,6 @@ function isInSupportList(filePath, list) {
   return true
 }
 
-function delay(t) {
-  return new Promise(resolve => setTimeout(resolve, t));
-}
-
 function mkdir(directory) {
   return new Promise(resolve => {
     shell.mkdir('-p', directory);
@@ -59,7 +55,6 @@ function clean(directory) {
 module.exports = {
   isInSupportList: isInSupportList,
   getFileExtensionName: getFileExtensionName,
-  delay: delay,
   paramsReader: paramsReader,
   appendFile: appendFile,
   mkdir: mkdir,
