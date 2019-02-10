@@ -15,15 +15,19 @@
     "kube",
     "ntpl"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wrasdf/ntpl.git"
+  },
   "author": "wrasdf@gmail.com",
   "license": "MIT",
-  "dependencies": {
-    "commander": "^2.14.0",
-    "js-yaml": "^3.10.0",
-    "mustache": "^2.3.0"
+  "bugs": {
+    "url": "https://github.com/wrasdf/ntpl/issues"
   },
-  "devDependencies": {
-    "ava": "^0.25.0",
-    "chai": "^4.1.2"
+  "dependencies": {
+    "commander": "^2.19.0",
+    "js-yaml": "^3.12.1",
+    "mustache": "^3.0.1",
+    "shelljs": "^0.8.3"
   }
 }

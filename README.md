@@ -6,28 +6,27 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 ## What's inside the Docker image
 
-- node:8.9.4-alpine
-- ntpl:0.2.0
-- kubectl:1.8.0
-- jq
-- make
-- curl
+- node:11.9.0-alpine
+- ntpl:0.3.0
+- kubectl:1.13.3
 - bash
-- openssl
 
 ## Synopsis
 
 ```
-ntpl version 0.2.1
+Usage: ntpl [options] [command]
 
-Usage: ntpl [options]
 Options:
-
   -v, --version                output the version number
-  -t, --template <file ...>    kubernetes template yaml
-  -p, --parameters <file ...>  parameters yaml
-  -e, --env <key>              environment key
+  -c, --component <file ...>   kubernetes component
+  -p, --parameters <file ...>  parameters file (yaml|yml)
   -h, --help                   output usage information
+
+Commands:
+  compile                      Compile kubernetes templates.
+  validate                     Validate kubernetes templates.
+  apply                        Apply templates into kubernetes.
+  delete                       Delete templates from kubernetes
 ```
 
 ## Docker image
@@ -49,7 +48,6 @@ metadata:
   namespace: {{namespace}}
   labels:
     app: {{name}}
-    purpose: {{name}}-policy
     runtime: {{runtime}}
   annotations:
     kubernetes.io/tls-acme: "true"
@@ -82,17 +80,20 @@ runtime: !!js/function |
   }
 ```
 
-
-- Generate template
-
-```
-docker run --rm -v $(pwd):/app -w /app ikerry/ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml
-```
-
-
-- Apply to kubernetes
-
+- Validate template
 
 ```
-docker run --rm -v $(pwd):/app -v $HOME/.kube:/root/.kube -w /app ikerry/ntpl:latest -t ./tpls/ingress.yaml -p ./tpls/params.yaml | kubectl apply -f -
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+```
+
+- Apply template
+
+```
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest apply -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+```
+
+- Delete template
+
+```
+docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ikerry/ntpl:latest delete -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
 ```

@@ -1,0 +1,65 @@
+---
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: {{name}}
+  namespace: {{namespace}}
+  labels:
+    app: {{name}}
+    repo: {{repo}}
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: {{name}}
+      repo: {{repo}}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 50%
+  template:
+    metadata:
+      labels:
+        app: {{name}}
+        repo: {{repo}}
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - {{name}}
+              topologyKey: kubernetes.io/hostname
+      containers:
+        - name: {{name}}
+          image: {{{container}}}:{{version}}
+          ports:
+          - containerPort: {{containerPort}}
+          livenessProbe:
+            exec:
+              command:
+              - curl
+              - localhost:{{containerPort}}/api/v1/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /api/v1/ready
+              port: {{containerPort}}
+            initialDelaySeconds: 3
+            timeoutSeconds: 8
+            periodSeconds: 10
+          resources:
+            limits:
+              cpu: 250m
+              memory: 1000Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi

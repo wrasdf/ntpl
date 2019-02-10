@@ -1,7 +1,0 @@
----
-name: kube-demo
-namespace: kube-demo
-runtime: !!js/function |
-  function (){
-    return "Hello World"
-  }
