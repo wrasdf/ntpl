@@ -1,0 +1,33 @@
+---
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  name: busy-box
+  namespace: platform-enablement
+  labels:
+    app: busy-box
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: busy-box
+  template:
+    metadata:
+      labels:
+        app: busy-box
+    spec:
+      containers:
+        - name: busy-box
+          image: myobplatform/aws-jq:latest
+          args:
+          - /bin/sh
+          - -c
+          - touch /tmp/healthy; sleep 5; tail -f /dev/null
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/healthy
+            initialDelaySeconds: 5
+            periodSeconds: 5
