@@ -48,7 +48,8 @@ ntpl
   .parse(process.argv);
 
 function parametersReader(filePath) {
-  return utils.isInSupportList(filePath, supportList).then(() => utils.paramsReader(filePath).then(paramsObj => Object.assign(data.params, paramsObj))}
+  return utils.isInSupportList(filePath, supportList)
+    .then(() => utils.paramsReader(filePath).then(paramsObj => Object.assign(data.params, paramsObj)))
 }
 
 function componentReader(component){
