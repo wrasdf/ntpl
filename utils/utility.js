@@ -6,14 +6,16 @@ const fs = require('fs'),
     yaml = require('js-yaml');
 
 function getFileExtensionName(filePath) {
-  return path.extname(filePath).replace('\.', '').toLowerCase();
+  return path.extname(filePath).replace(`\.`, ``).toLowerCase();
 }
 
 function isInSupportList(filePath, list) {
-  if (list.indexOf(getFileExtensionName(filePath)) < 0) {
-    throw new Error(`Only support ${list}`)
-  }
-  return true
+  return new Promise((resolve, reject) => {
+    if (list.indexOf(getFileExtensionName(filePath)) < 0) {
+      reject(`Only support ${list}`)
+    }
+    resolve(true);
+  })
 }
 
 function mkdir(directory) {
@@ -31,9 +33,7 @@ function rmdir(directory) {
 }
 
 function paramsReader(filePath) {
-  return readfile(filePath).then(
-    content => yaml.load(content, 'utf8')
-  ).catch(err => { throw new Error(err) })
+  return readfile(filePath).then(content => yaml.load(content, 'utf8'))
 }
 
 async function readdir(directory) {
@@ -53,12 +53,12 @@ function clean(directory) {
 }
 
 module.exports = {
-  isInSupportList: isInSupportList,
-  getFileExtensionName: getFileExtensionName,
-  paramsReader: paramsReader,
-  appendFile: appendFile,
-  mkdir: mkdir,
-  clean: clean,
-  readdir: readdir,
-  readfile: readfile
+  isInSupportList,
+  getFileExtensionName,
+  paramsReader,
+  appendFile,
+  mkdir,
+  clean,
+  readdir,
+  readfile
 }
