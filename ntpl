@@ -3,18 +3,20 @@
 const ntpl = require('commander'),
     Mustache = require('mustache'),
     utils = require('./utils/utility'),
+    parser = require('./utils/parser'),
     shell = require('shelljs'),
     supportList = ['yaml', 'yml'];
 
 let data = {
   component: '',
+  list: [],
   params: {}
 }
 
 ntpl
   .version('0.3.0', '-v, --version')
   .option('-c, --component <file ...>', 'kubernetes component', componentReader)
-  .option('-p, --parameters <file ...>', 'parameters file (yaml|yml)', parametersReader)
+  .option('-p, --parameters <file ...>', 'parameters file (yaml|yml)', parameterReader)
 
 ntpl
   .command('compile')
@@ -47,9 +49,11 @@ ntpl
 ntpl
   .parse(process.argv);
 
-function parametersReader(filePath) {
-  return utils.isInSupportList(filePath, supportList)
-    .then(() => utils.paramsReader(filePath).then(paramsObj => Object.assign(data.params, paramsObj)))
+function parameterReader(filePath) {
+  if (utils.isInSupportList(filePath, supportList)) {
+    data.list.push(filePath)
+  }
+  return data.list
 }
 
 function componentReader(component){
@@ -60,8 +64,9 @@ function kubeCompile() {
   const buildPath = `_build`,
         componentFolderPath = `templates/${data.component}`;
 
-  return utils
-    .clean(buildPath)
+  return parser.parameterBuilder(data.list)
+    .then(params => { return data.params = params })
+    .then(() => utils.clean(buildPath))
     .then(() => utils.mkdir(`${buildPath}/${data.component}`))
     .then(() => utils.readdir(componentFolderPath))
     .then(files => Promise.all(files.map(file =>
