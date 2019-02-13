@@ -10,9 +10,9 @@ describe('utils functions', () => {
 
   describe(`yamlPaser`, () => {
     it(`should parse yaml correctly`, () => {
-      return expect(utils.yamlPaser(`${__dirname}/files/params1.yaml`)).to.eventually.have.property("name");
-      return expect(utils.yamlPaser(`${__dirname}/files/params1.yaml`)).to.eventually.have.property("namespace");
-      return expect(utils.yamlPaser(`${__dirname}/files/params2.yaml`)).to.eventually.have.property("version");
+      expect(utils.yamlPaser(`${__dirname}/files/params1.yaml`)).to.eventually.have.property("name");
+      expect(utils.yamlPaser(`${__dirname}/files/params1.yaml`)).to.eventually.have.property("namespace");
+      expect(utils.yamlPaser(`${__dirname}/files/params2.yaml`)).to.eventually.have.property("version");
     });
   })
 
