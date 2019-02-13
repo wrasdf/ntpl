@@ -12,10 +12,6 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install
 COPY . /app/
-
-RUN chmod +x ntpl && \
-    mv ntpl /usr/local/bin/ && \
-    mv utils /usr/local/bin/ && \
-    mv node_modules /usr/local/bin/
+RUN npm link
 
 ENTRYPOINT ["ntpl"]

@@ -14,7 +14,7 @@ let data = {
 }
 
 ntpl
-  .version('0.3.0', '-v, --version')
+  .version('0.3.1', '-v, --version')
   .option('-c, --component <file ...>', 'kubernetes component', componentReader)
   .option('-p, --parameters <file ...>', 'parameters file (yaml|yml)', parameterReader)
 
@@ -50,7 +50,7 @@ ntpl
   .parse(process.argv);
 
 function parameterReader(filePath) {
-  if (utils.isInSupportList(filePath, supportList)) {
+  if (parser.isInSupportList(filePath, supportList)) {
     data.list.push(filePath)
   }
   return data.list

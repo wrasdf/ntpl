@@ -1,6 +1,6 @@
 {
   "name": "ntpl",
-  "version": "0.2.1",
+  "version": "0.3.1",
   "description": "nodejs kubernetes template engine",
   "main": "ntpl",
   "scripts": {
@@ -22,6 +22,9 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/wrasdf/ntpl/issues"
+  },
+  "bin": {
+    "ntpl": "./ntpl"
   },
   "dependencies": {
     "commander": "^2.19.0",

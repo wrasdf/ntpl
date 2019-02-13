@@ -16,27 +16,4 @@ describe('utils functions', () => {
     });
   })
 
-  describe(`getFileExtenionName`, () => {
-    it(`should return correct file extention`, () => {
-      return expect(utils.getFileExtenionName(`params1.yaml`)).to.equal('yaml');
-      return expect(utils.getFileExtenionName(`params1.json`)).to.equal('json');
-      return expect(utils.getFileExtenionName(`params1.yml`)).to.equal('yml');
-    });
-  })
-
-  describe(`isInSupportList`, () => {
-
-    it(`should return correct boolean`, () => {
-      return expect(utils.isInSupportList(`params1.yaml`, ['yaml'])).to.equal(true);
-      return expect(utils.isInSupportList(`params1.yml`, ['yaml', 'yml'])).to.equal(true);
-    });
-
-    it(`should return false boolean`, () => {
-      return expect(utils.isInSupportList(`params1.yaml`, ['yml'])).to.equal(false);
-      return expect(utils.isInSupportList(`params1.yml`, ['yaml', 'json'])).to.equal(false);
-      return expect(utils.isInSupportList(`params1.yml`, [])).to.equal(false);
-    });
-  })
-
-
 });

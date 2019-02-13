@@ -7,7 +7,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## What's inside the Docker image
 
 - node:11.9.0-alpine
-- ntpl:0.3.0
+- ntpl:0.3.1
 - kubectl:1.13.3
 - bash
 
@@ -80,6 +80,7 @@ runtime: !!js/function |
   }
 ```
 
+
 - Validate template
 
 ```
@@ -96,4 +97,10 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest
 
 ```
 docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ikerry/ntpl:latest delete -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+```
+
+- Compile template
+
+```
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
 ```

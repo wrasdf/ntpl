@@ -5,14 +5,6 @@ const fs = require('fs'),
     shell = require('shelljs'),
     yaml = require('js-yaml');
 
-function getFileExtenionName(filePath) {
-  return path.extname(filePath).replace(`\.`, ``).toLowerCase();
-}
-
-function isInSupportList(filePath, list) {
-  return list.indexOf(getFileExtenionName(filePath)) >= 0
-}
-
 function mkdir(directory) {
   return new Promise(resolve => {
     shell.mkdir('-p', directory);
@@ -48,8 +40,6 @@ function clean(directory) {
 }
 
 module.exports = {
-  isInSupportList,
-  getFileExtenionName,
   yamlPaser,
   appendFile,
   mkdir,
