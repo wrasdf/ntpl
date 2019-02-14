@@ -1,4 +1,4 @@
-FROM node:11.9.0-alpine
+FROM node:10.15.1-alpine
 
 RUN apk add --update curl bash \
   && rm -rf /var/cache/apk/*

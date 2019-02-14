@@ -4,7 +4,9 @@ const ntpl = require('commander'),
     Mustache = require('mustache'),
     utils = require('./utils/utility'),
     parser = require('./utils/parser'),
-    supportList = ['yaml', 'yml']
+    supportList = ['yaml', 'yml'],
+    buildPath = '_build'
+
 
 ntpl
   .version('0.3.1', '-v, --version')
@@ -58,8 +60,7 @@ function componentReader(component, componentsList){
 }
 
 function kubeCompile() {
-  const buildPath = `_build`,
-        params = parser.parameterBuilder(ntpl.parameters),
+  const params = parser.parameterBuilder(ntpl.parameters),
         components = ntpl.components
 
   // Clean build folder
@@ -80,24 +81,21 @@ function kubeCompile() {
 
 function kubeValidate(components) {
   components.map(component => {
-    const buildFolderPath = `${process.cwd()}/_build/${component}`
-    const files = utils.readdir(buildFolderPath)
+    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
     files.map(file => utils.exec(`kubectl apply --validate --dry-run -f ${file}`))
   })
 }
 
 function kubeApply(components) {
   components.map(component => {
-    const buildFolderPath = `${process.cwd()}/_build/${component}`
-    const files = utils.readdir(buildFolderPath)
+    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
     files.map(file => utils.exec(`kubectl apply -f ${file}`))
   })
 }
 
 function kubeDelete(components) {
   components.map(component => {
-    const buildFolderPath = `${process.cwd()}/_build/${component}`
-    const files = utils.readdir(buildFolderPath)
+    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
     files.map(file => utils.exec(`kubectl delete -f ${file}`))
   })
 }
