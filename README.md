@@ -6,10 +6,9 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 ## What's inside the Docker image
 
-- node:11.9.0-alpine
-- ntpl:0.3.1
+- node:10.15.1-alpine
+- ntpl:0.3.2
 - kubectl:1.13.3
-- bash
 
 ## Synopsis
 
@@ -17,16 +16,16 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 Usage: ntpl [options] [command]
 
 Options:
-  -v, --version                output the version number
-  -c, --component <file ...>   kubernetes component
-  -p, --parameters <file ...>  parameters file (yaml|yml)
-  -h, --help                   output usage information
+  -v, --version             output the version number
+  -c, --components [value]  kubernetes components (default: [])
+  -p, --parameters [value]  parameters file (yaml|yml) (default: [])
+  -h, --help                output usage information
 
 Commands:
-  compile                      Compile kubernetes templates.
-  validate                     Validate kubernetes templates.
-  apply                        Apply templates into kubernetes.
-  delete                       Delete templates from kubernetes
+  compile                   Compile kubernetes templates.
+  validate                  Validate kubernetes templates.
+  apply                     Apply templates into kubernetes.
+  delete                    Delete templates from kubernetes
 ```
 
 ## Docker image
