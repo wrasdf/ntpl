@@ -9,7 +9,7 @@ const ntpl = require('commander'),
 
 
 ntpl
-  .version('0.3.1', '-v, --version')
+  .version('0.3.2', '-v, --version')
   .option('-c, --components [value]', 'kubernetes components', componentReader, [])
   .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parameterReader, [])
 
