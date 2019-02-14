@@ -1,5 +1,5 @@
 ---
-name: ntpl-demo
+name: ntpl
 repo: ntpl
 namespace: kube-demo
 runtime: !!js/function |

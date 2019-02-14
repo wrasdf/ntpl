@@ -4,19 +4,12 @@ const ntpl = require('commander'),
     Mustache = require('mustache'),
     utils = require('./utils/utility'),
     parser = require('./utils/parser'),
-    shell = require('shelljs'),
-    supportList = ['yaml', 'yml'];
-
-let data = {
-  component: '',
-  list: [],
-  params: {}
-}
+    supportList = ['yaml', 'yml']
 
 ntpl
   .version('0.3.1', '-v, --version')
-  .option('-c, --component <file ...>', 'kubernetes component', componentReader)
-  .option('-p, --parameters <file ...>', 'parameters file (yaml|yml)', parameterReader)
+  .option('-c, --components [value]', 'kubernetes components', componentReader, [])
+  .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parameterReader, [])
 
 ntpl
   .command('compile')
@@ -29,73 +22,82 @@ ntpl
   .command('validate')
   .description('Validate kubernetes templates.')
   .action(() => {
-    kubeCompile().then(() => kubeValidate())
+    kubeCompile()
+    kubeValidate(ntpl.components)
   })
 
 ntpl
   .command('apply')
   .description('Apply templates into kubernetes.')
   .action(() => {
-    kubeCompile().then(() => kubeApply())
+    kubeCompile()
+    kubeApply(ntpl.components)
   })
 
 ntpl
   .command('delete')
   .description('Delete templates from kubernetes')
   .action(() => {
-    kubeCompile().then(() => kubeDelete())
+    kubeCompile()
+    kubeDelete(ntpl.components)
   })
 
 ntpl
-  .parse(process.argv);
+  .parse(process.argv)
 
-function parameterReader(filePath) {
+function parameterReader(filePath, fileList) {
   if (parser.isInSupportList(filePath, supportList)) {
-    data.list.push(filePath)
+    fileList.push(filePath)
   }
-  return data.list
+  return fileList
 }
 
-function componentReader(component){
-  return data.component = component;
+function componentReader(component, componentsList){
+  componentsList.push(component)
+  return componentsList
 }
 
 function kubeCompile() {
   const buildPath = `_build`,
-        componentFolderPath = `templates/${data.component}`;
+        params = parser.parameterBuilder(ntpl.parameters),
+        components = ntpl.components
 
-  return parser.parameterBuilder(data.list)
-    .then(params => { return data.params = params })
-    .then(() => utils.clean(buildPath))
-    .then(() => utils.mkdir(`${buildPath}/${data.component}`))
-    .then(() => utils.readdir(componentFolderPath))
-    .then(files => Promise.all(files.map(file =>
-        utils.readfile(`${componentFolderPath}/${file}`)
-        .then(content => Mustache.render(content, data.params))
-        .then(content => utils.appendFile(`${buildPath}/${data.component}/${file}`, content))
-      ))
-    )
+  // Clean build folder
+  utils.rmdir(buildPath)
+  components.map(component => utils.mkdir(`${process.cwd()}/${buildPath}/${component}`))
+
+  // Compile Each Component
+  components.map(component => {
+    const componentPath = `${process.cwd()}/templates/${component}`
+    const files = utils.readdir(componentPath)
+    files.map(file => {
+      const fileContent = utils.readfile(file)
+      utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
+    })
+  })
+
 }
 
-function buildComponentFolderReader(component) {
-  const buildFolderPath = `_build/${component}`;
-  return utils.readdir(buildFolderPath)
+function kubeValidate(components) {
+  components.map(component => {
+    const buildFolderPath = `${process.cwd()}/_build/${component}`
+    const files = utils.readdir(buildFolderPath)
+    files.map(file => utils.exec(`kubectl apply --validate --dry-run -f ${file}`))
+  })
 }
 
-function kubeValidate() {
-  const buildFolderPath = `_build/${data.component}`;
-  return buildComponentFolderReader(data.component)
-  .then(files => files.map(file => shell.exec(`kubectl apply --validate --dry-run  -f ${buildFolderPath}/${file}`)))
+function kubeApply(components) {
+  components.map(component => {
+    const buildFolderPath = `${process.cwd()}/_build/${component}`
+    const files = utils.readdir(buildFolderPath)
+    files.map(file => utils.exec(`kubectl apply -f ${file}`))
+  })
 }
 
-function kubeApply() {
-  const buildFolderPath = "_build/" + data.component
-  return buildComponentFolderReader(data.component)
-  .then(files => files.map(file => shell.exec(`kubectl apply -f ${buildFolderPath}/${file}`)))
-}
-
-function kubeDelete() {
-  const buildFolderPath = "_build/" + data.component
-  return buildComponentFolderReader(data.component)
-  .then(files => files.map(file => shell.exec(`kubectl delete -f ${buildFolderPath}/${file}`)))
+function kubeDelete(components) {
+  components.map(component => {
+    const buildFolderPath = `${process.cwd()}/_build/${component}`
+    const files = utils.readdir(buildFolderPath)
+    files.map(file => utils.exec(`kubectl delete -f ${file}`))
+  })
 }

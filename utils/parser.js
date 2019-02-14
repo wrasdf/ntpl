@@ -12,11 +12,8 @@ function isInSupportList(filePath, list) {
 }
 
 function parameterBuilder(files) {
-  return Promise.all(files.map(file => utils.yamlPaser(file)))
-    .then(objectArray => objectArray.reduce(
-        (accumulator, currentValue) => Object.assign(accumulator, currentValue), {}
-      )
-    )
+  return files.map(file => utils.yamlPaser(file))
+    .reduce((accumulator, currentValue) => Object.assign(accumulator, currentValue), {})
 }
 
 module.exports = {

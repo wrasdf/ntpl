@@ -29,7 +29,7 @@ describe('parser functions', () => {
   describe(`parametersBuilder`, () => {
     it(`should return correct parameters objects`, async () => {
       let list = [`${__dirname}/files/params1.yaml`, `${__dirname}/files/params2.yaml`]
-      const results = await parser.parameterBuilder(list)
+      const results = parser.parameterBuilder(list)
       expect(results).to.eql({
         "name": "ntpl-demo",
         "namespace": "platform-enablement",

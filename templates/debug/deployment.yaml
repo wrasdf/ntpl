@@ -3,7 +3,7 @@ kind: Deployment
 apiVersion: apps/v1beta2
 metadata:
   name: busy-box
-  namespace: gm-digital
+  namespace: platform-enablement
   labels:
     app: busy-box
 spec:

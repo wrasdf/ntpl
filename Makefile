@@ -14,4 +14,7 @@ test: build
 	docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app --entrypoint="/bin/bash" ntpl:latest -c "npm run test"
 
 validate: build
-	docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+	docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding" -c "debug"
+
+compile: build
+	docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding" -c "debug"
