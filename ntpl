@@ -67,10 +67,9 @@ function kubeCompile() {
   utils.rmdir(buildPath)
   components.map(component => utils.mkdir(`${process.cwd()}/${buildPath}/${component}`))
 
-  // Compile Each Component
+  // Compile Components From Templates Folder to Build Folder
   components.map(component => {
-    const componentPath = `${process.cwd()}/templates/${component}`
-    const files = utils.readdir(componentPath)
+    const files = utils.readdir(`${process.cwd()}/templates/${component}`)
     files.map(file => {
       const fileContent = utils.readfile(file)
       utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
