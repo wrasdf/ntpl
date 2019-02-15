@@ -1,4 +1,4 @@
-FROM node:10.15.1-alpine
+FROM node:11.9.0-alpine
 
 RUN apk add --update curl bash \
   && rm -rf /var/cache/apk/*
@@ -12,6 +12,9 @@ WORKDIR /app
 COPY package*.json /app/
 RUN npm install
 COPY . /app/
-RUN npm link
+RUN chmod +x ntpl && \
+    mv ntpl /usr/local/bin/ && \
+    mv utils /usr/local/bin/ && \
+    mv node_modules /usr/local/bin/
 
 ENTRYPOINT ["ntpl"]
