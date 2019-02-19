@@ -7,7 +7,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## What's inside the Docker image
 
 - node:11.9.0-alpine
-- ntpl:0.3.2
+- ntpl:0.3.5
 - kubectl:1.13.3
 
 ## Synopsis
@@ -19,13 +19,16 @@ Options:
   -v, --version             output the version number
   -c, --components [value]  kubernetes components (default: [])
   -p, --parameters [value]  parameters file (yaml|yml) (default: [])
+  -t, --template <file>     template file
+  -o, --output <file>       output file
   -h, --help                output usage information
 
 Commands:
-  compile                   Compile kubernetes templates.
-  validate                  Validate kubernetes templates.
-  apply                     Apply templates into kubernetes.
-  delete                    Delete templates from kubernetes
+  compile                   Compile Kubernetes component templates.
+  validate                  Validate Kubernetes component templates.
+  apply                     Apply Kubernetes component templates into kubernetes.
+  delete                    Delete Kubernetes component resources from kubernetes
+  render                    Generate template
 ```
 
 ## Docker image
@@ -79,27 +82,32 @@ runtime: !!js/function |
   }
 ```
 
-
-- Validate template
+- Validate Kubernetes component templates
 
 ```
 docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
 ```
 
-- Apply template
+- Apply Kubernetes component templates
 
 ```
 docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest apply -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
 ```
 
-- Delete template
+- Delete Kubernetes component templates
 
 ```
 docker run --rm -v $(pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ikerry/ntpl:latest delete -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
 ```
 
-- Compile template
+- Compile Kubernetes component templates
 
 ```
 docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+```
+
+- Render template
+
+```
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -t "tmp.yaml" -o test.yaml
 ```

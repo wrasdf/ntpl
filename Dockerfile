@@ -1,6 +1,6 @@
 FROM node:11.9.0-alpine
 
-RUN apk add --update curl bash \
+RUN apk --update add curl bash \
   && rm -rf /var/cache/apk/*
 
 ENV KUBECTLVERSION v1.13.3
@@ -13,8 +13,8 @@ COPY package*.json /app/
 RUN npm install
 COPY . /app/
 RUN chmod +x ntpl && \
-    mv ntpl /usr/local/bin/ && \
-    mv utils /usr/local/bin/ && \
-    mv node_modules /usr/local/bin/
+    cp ntpl /usr/local/bin/ && \
+    cp -r utils /usr/local/bin/ && \
+    cp -r node_modules /usr/local/bin/
 
 ENTRYPOINT ["ntpl"]

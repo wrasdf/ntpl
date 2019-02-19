@@ -7,22 +7,23 @@ const ntpl = require('commander'),
     supportList = ['yaml', 'yml'],
     buildPath = '_build'
 
-
 ntpl
-  .version('0.3.2', '-v, --version')
+  .version('0.3.5', '-v, --version')
   .option('-c, --components [value]', 'kubernetes components', componentReader, [])
   .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parameterReader, [])
+  .option('-t, --template <file>', 'template file')
+  .option('-o, --output <file>', 'output file')
 
 ntpl
   .command('compile')
-  .description('Compile kubernetes templates.')
+  .description('Compile Kubernetes component templates.')
   .action(() => {
     kubeCompile()
   })
 
 ntpl
   .command('validate')
-  .description('Validate kubernetes templates.')
+  .description('Validate Kubernetes component templates.')
   .action(() => {
     kubeCompile()
     kubeValidate(ntpl.components)
@@ -30,7 +31,7 @@ ntpl
 
 ntpl
   .command('apply')
-  .description('Apply templates into kubernetes.')
+  .description('Apply Kubernetes component templates into kubernetes.')
   .action(() => {
     kubeCompile()
     kubeApply(ntpl.components)
@@ -38,14 +39,27 @@ ntpl
 
 ntpl
   .command('delete')
-  .description('Delete templates from kubernetes')
+  .description('Delete Kubernetes component resources from kubernetes')
   .action(() => {
     kubeCompile()
     kubeDelete(ntpl.components)
   })
 
 ntpl
+  .command('render')
+  .description('Generate template')
+  .action(() => {
+    templateReader(ntpl.template)
+  })
+
+ntpl
   .parse(process.argv)
+
+function templateReader(file) {
+  const fileContent = utils.readfile(file),
+        params = getParameters(ntpl.parameters)
+  utils.appendFile(ntpl.output, Mustache.render(fileContent, params))
+}
 
 function parameterReader(filePath, fileList) {
   if (parser.isInSupportList(filePath, supportList)) {
@@ -59,8 +73,12 @@ function componentReader(component, componentsList){
   return componentsList
 }
 
+function getParameters(params) {
+  return parser.parameterBuilder(params)
+}
+
 function kubeCompile() {
-  const params = parser.parameterBuilder(ntpl.parameters),
+  const params = getParameters(ntpl.parameters),
         components = ntpl.components
 
   // Clean build folder
