@@ -109,5 +109,5 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -t "tmp.yaml" -o test.yaml
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render -p "envs/default.yaml" -p "envs/doris.yaml" -t "tmp.yaml" -o test.yaml
 ```
