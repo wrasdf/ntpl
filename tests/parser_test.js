@@ -38,4 +38,15 @@ describe('parser functions', () => {
     })
   })
 
+  describe(`keyBuilder`, () => {
+    it(`should return correct parameters objects`, async () => {
+      const results = parser.keyBuilder(["name=Cluster", "version=v0.1.2", "cluster=kubernetes"])
+      expect(results).to.eql({
+        "name": "Cluster",
+        "version": "v0.1.2",
+        "cluster": "kubernetes"
+      })
+    })
+  })
+
 });

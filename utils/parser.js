@@ -12,12 +12,18 @@ function isInSupportList(filePath, list) {
 }
 
 function parameterBuilder(files) {
-  return files.map(file => utils.yamlPaser(file))
+  return files.map(file => utils.yamlParser(file))
+    .reduce((accumulator, currentValue) => Object.assign(accumulator, currentValue), {})
+}
+
+function keyBuilder(keypairs) {
+  return keypairs.map(keypair => utils.keyParser(keypair))
     .reduce((accumulator, currentValue) => Object.assign(accumulator, currentValue), {})
 }
 
 module.exports = {
   isInSupportList,
   getFileExtenionName,
-  parameterBuilder
+  parameterBuilder,
+  keyBuilder
 }

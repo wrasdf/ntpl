@@ -17,8 +17,15 @@ function rmdir(directory) {
   return shell.rm('-rf', directory);
 }
 
-function yamlPaser(filePath) {
+function yamlParser(filePath) {
   return yaml.load(readfile(filePath), 'utf8')
+}
+
+function keyParser(keypair) {
+  const result = {}
+  const arr = keypair.split('=')
+  arr[1] && (result[arr[0]] = arr[1])
+  return result
 }
 
 function readdir(dir) {
@@ -34,7 +41,8 @@ function appendFile(path, content) {
 }
 
 module.exports = {
-  yamlPaser,
+  yamlParser,
+  keyParser,
   exec,
   mkdir,
   rmdir,

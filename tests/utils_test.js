@@ -5,12 +5,22 @@ const utils = require('../utils/utility');
 
 describe('utils functions', () => {
 
-  describe(`yamlPaser`, () => {
+  describe(`yamlParser`, () => {
     it(`should parse yaml correctly`, () => {
-      objects = utils.yamlPaser(`${__dirname}/files/params1.yaml`)
+      objects = utils.yamlParser(`${__dirname}/files/params1.yaml`)
       expect(objects).to.have.property("name");
       expect(objects).to.have.property("namespace");
     });
+  })
+
+
+  describe(`keyParser`, () => {
+    it(`should return correct object`, async () => {
+      const results = utils.keyParser("name=Cluster")
+      expect(results).to.eql({
+        "name": "Cluster",
+      })
+    })
   })
 
 });
