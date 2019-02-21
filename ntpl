@@ -11,7 +11,7 @@ ntpl
   .version('0.3.6', '-v, --version')
   .option('-c, --components [value]', 'kubernetes components', componentReader, [])
   .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parameterReader, [])
-  .option('-k, --keys [value]', 'Key Value Parameter', keyReader, [])
+  .option('-k, --keyPairs [value]', 'Key=Value Parameter', keyReader, [])
   .option('-t, --template <file>', 'template file')
   .option('-o, --output <file>', 'output file')
 
@@ -81,7 +81,7 @@ function componentReader(component, componentsList){
 
 function getParameters() {
   const fileParams = parser.parameterBuilder(ntpl.parameters)
-  const keyParams = parser.keyBuilder(ntpl.keys)
+  const keyParams = parser.keyBuilder(ntpl.keyPairs)
   return Object.assign({}, fileParams, keyParams)
 }
 

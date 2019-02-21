@@ -7,7 +7,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## What's inside the Docker image
 
 - node:11.9.0-alpine
-- ntpl:0.3.5
+- ntpl:0.3.6
 - kubectl:1.13.3
 
 ## Synopsis
@@ -19,6 +19,7 @@ Options:
   -v, --version             output the version number
   -c, --components [value]  kubernetes components (default: [])
   -p, --parameters [value]  parameters file (yaml|yml) (default: [])
+  -k, --keyPairs [value]    Key=Value Parameter (default: [])
   -t, --template <file>     template file
   -o, --output <file>       output file
   -h, --help                output usage information
@@ -85,13 +86,13 @@ runtime: !!js/function |
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -k "name=cluster" -k "v=v0.2.3" -c "onboarding"
 ```
 
 - Apply Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest apply -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding"
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest apply -p "envs/default.yaml" -p "envs/doris.yaml" -k "name=cluster" -k "v=v0.2.3" -c "onboarding"
 ```
 
 - Delete Kubernetes component templates
@@ -109,5 +110,5 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render -p "envs/default.yaml" -p "envs/doris.yaml" -t "tmp.yaml" -o test.yaml
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render -p "envs/default.yaml" -p "envs/doris.yaml" -k "name=cluster" -t "tmp.yaml" -o test.yaml
 ```
