@@ -15,12 +15,34 @@ describe('utils functions', () => {
 
 
   describe(`keyParser`, () => {
+
     it(`should return correct object`, async () => {
       const results = utils.keyParser("name=Cluster")
       expect(results).to.eql({
         "name": "Cluster",
       })
     })
+
+    it(`should return correct object`, async () => {
+      const results = utils.keyParser("app.name=Cluster")
+      expect(results).to.eql({
+        "app": {
+          "name": "Cluster"
+        },
+      })
+    })
+
+    it(`should return correct object`, async () => {
+      const results = utils.keyParser("app.name.version=v1.0.3")
+      expect(results).to.eql({
+        "app": {
+          "name": {
+            "version": "v1.0.3"
+          }
+        },
+      })
+    })
+
   })
 
 });

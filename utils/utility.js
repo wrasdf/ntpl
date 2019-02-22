@@ -21,11 +21,30 @@ function yamlParser(filePath) {
   return yaml.load(readfile(filePath), 'utf8')
 }
 
+
+var initialValue = 0;
+var sum = [{x: 1}, {x: 2}, {x: 3}].reduce(
+    (accumulator, currentValue) => accumulator + currentValue.x
+    ,initialValue
+);
+
 function keyParser(keypair) {
-  const result = {}
-  const arr = keypair.split('=')
-  arr[1] && (result[arr[0]] = arr[1])
-  return result
+  const results = {}
+  const pairArr = keypair.split('=')
+  if (pairArr[1]) {
+    const keyArr = pairArr[0].split('.')
+    keyArr.reduce(
+      (accumulator, currentValue, index) => {
+        accumulator[currentValue] = {}
+        if (index === keyArr.length-1) {
+          accumulator[currentValue] = pairArr[1]
+        }
+        return accumulator[currentValue]
+      }
+      , results
+    )
+  }
+  return results
 }
 
 function readdir(dir) {
