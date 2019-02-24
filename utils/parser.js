@@ -1,7 +1,8 @@
 'use strict';
 
 const utils = require('./utility'),
-      path = require('path')
+      path = require('path'),
+      merge = require('deepmerge')
 
 function getFileExtenionName(filePath) {
   return path.extname(filePath).replace(`\.`, ``).toLowerCase();
@@ -12,13 +13,14 @@ function isInSupportList(filePath, list) {
 }
 
 function parameterBuilder(files) {
-  return files.map(file => utils.yamlParser(file))
-    .reduce((accumulator, currentValue) => Object.assign(accumulator, currentValue), {})
+  return files.filter(file => isInSupportList(file, ["yaml", "yml"]))
+    .map(file => utils.yamlParser(file))
+    .reduce((accumulator, currentValue) => merge(accumulator, currentValue), {})
 }
 
 function keyBuilder(keypairs) {
   return keypairs.map(keypair => utils.keyParser(keypair))
-    .reduce((accumulator, currentValue) => Object.assign(accumulator, currentValue), {})
+    .reduce((accumulator, currentValue) => merge(accumulator, currentValue), {})
 }
 
 module.exports = {

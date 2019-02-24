@@ -1,2 +1,5 @@
 ---
-version: v0.2.3
+app:
+  name: ntpl
+  namespace: kube-system
+  version: v1.0.1

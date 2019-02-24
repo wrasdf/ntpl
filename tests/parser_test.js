@@ -27,15 +27,29 @@ describe('parser functions', () => {
   })
 
   describe(`parametersBuilder`, () => {
+
     it(`should return correct parameters objects`, async () => {
       let list = [`${__dirname}/files/params1.yaml`, `${__dirname}/files/params2.yaml`]
       const results = parser.parameterBuilder(list)
       expect(results).to.eql({
-        "name": "ntpl-demo",
-        "namespace": "platform-enablement",
-        "version": "v0.2.3"
+        "app": {
+          "name": "ntpl",
+          "namespace": "kube-system",
+          "version": "v1.0.1",
+          "logtail":{
+            "app": "tail-name",
+            "component": "kube-logging"
+          }
+        }
       })
     })
+
+    it(`should ignore not support params file`, async () => {
+      let list = [`${__dirname}/files/params1.yaml`, `${__dirname}/files/params2.yaml`, `${__dirname}/files/text.json`]
+      const results = parser.parameterBuilder(list)
+      expect(results.app.name).to.eql("ntpl")
+    })
+
   })
 
   describe(`keyBuilder`, () => {

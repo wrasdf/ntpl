@@ -8,8 +8,8 @@ describe('utils functions', () => {
   describe(`yamlParser`, () => {
     it(`should parse yaml correctly`, () => {
       objects = utils.yamlParser(`${__dirname}/files/params1.yaml`)
-      expect(objects).to.have.property("name");
-      expect(objects).to.have.property("namespace");
+      expect(objects.app).to.have.property("name");
+      expect(objects.app).to.have.property("namespace");
     });
   })
 

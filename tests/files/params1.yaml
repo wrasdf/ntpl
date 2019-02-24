@@ -1,3 +1,7 @@
 ---
-name: ntpl-demo
-namespace: platform-enablement
+app:
+  name: ntpl-demo
+  namespace: platfrom
+  logtail:
+    app: tail-name
+    component: kube-logging
