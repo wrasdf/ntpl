@@ -7,7 +7,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 ## What's inside the Docker image
 
 - node:11.9.0-alpine
-- ntpl:0.3.7
+- ntpl:0.4.0
 - kubectl:1.13.3
 
 ## Synopsis
