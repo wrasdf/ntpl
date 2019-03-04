@@ -2,17 +2,15 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{name}}
-  namespace: {{namespace}}
+  name: {{onboarding.name}}
+  namespace: {{onboarding.namespace}}
   labels:
-    app: {{name}}
-    repo: {{repo}}
-  annotations:
-    prometheus.io/scrape: "true"
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}
 spec:
   ports:
     - port: 80
-      targetPort: {{containerPort}}
+      targetPort: {{onboarding.containerPort}}
   selector:
-    app: {{name}}
-    repo: {{repo}}
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}

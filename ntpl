@@ -4,6 +4,7 @@ const ntpl = require('commander'),
     Mustache = require('mustache'),
     utils = require('./utils/utility'),
     parser = require('./utils/parser'),
+    merge = require('deepmerge'),
     supportList = ['yaml', 'yml'],
     buildPath = '_build'
 
@@ -82,13 +83,13 @@ function componentReader(component, componentsList){
 function getParameters() {
   const fileParams = parser.parameterBuilder(ntpl.parameters)
   const keyParams = parser.keyBuilder(ntpl.keyPairs)
-  return Object.assign({}, fileParams, keyParams)
+  return merge(fileParams, keyParams)
 }
 
 function kubeCompile() {
+
   const params = getParameters(),
         components = ntpl.components
-
   // Clean build folder
   utils.rmdir(buildPath)
   components.map(component => utils.mkdir(`${process.cwd()}/${buildPath}/${component}`))

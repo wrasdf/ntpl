@@ -2,18 +2,18 @@
 kind: Deployment
 apiVersion: apps/v1beta2
 metadata:
-  name: {{name}}
-  namespace: {{namespace}}
+  name: {{onboarding.name}}
+  namespace: {{onboarding.namespace}}
   labels:
-    app: {{name}}
-    repo: {{repo}}
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      app: {{name}}
-      repo: {{repo}}
+      app: {{onboarding.name}}
+      repo: {{onboarding.repo}}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -22,37 +22,25 @@ spec:
   template:
     metadata:
       labels:
-        app: {{name}}
-        repo: {{repo}}
+        app: {{onboarding.name}}
+        repo: {{onboarding.repo}}
     spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - {{name}}
-              topologyKey: kubernetes.io/hostname
       containers:
-        - name: {{name}}
-          image: {{{container}}}:{{version}}
+        - name: {{onboarding.name}}
+          image: {{{onboarding.container}}}:{{onboarding.version}}
           ports:
-          - containerPort: {{containerPort}}
+            - containerPort: {{onboarding.containerPort}}
           livenessProbe:
             exec:
               command:
               - curl
-              - localhost:{{containerPort}}/api/v1/healthy
+              - localhost:{{onboarding.containerPort}}/api/v1/healthy
             initialDelaySeconds: 5
             periodSeconds: 5
           readinessProbe:
             httpGet:
               path: /api/v1/ready
-              port: {{containerPort}}
+              port: {{onboarding.containerPort}}
             initialDelaySeconds: 3
             timeoutSeconds: 8
             periodSeconds: 10
@@ -63,3 +51,5 @@ spec:
             requests:
               cpu: 100m
               memory: 128Mi
+      imagePullSecrets:
+        - name: regsecret

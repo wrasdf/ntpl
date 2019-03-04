@@ -1,8 +1,12 @@
 ---
-name: ntpl
-repo: ntpl
-namespace: kube-demo
 runtime: !!js/function |
   function (){
     return "Hello World"
   }
+
+onboarding:
+  name: onboarding
+  namespace: platform
+  repo: kube-aliyun
+  containerPort: 8080
+  dns_name: api.manyuenergy.com

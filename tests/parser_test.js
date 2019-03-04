@@ -61,6 +61,17 @@ describe('parser functions', () => {
         "cluster": "kubernetes"
       })
     })
+
+    it(`should return correct parameters objects with hierarchy`, async () => {
+      const results = parser.keyBuilder(["app.name=Cluster", "version=v0.1.2", "cluster=kubernetes"])
+      expect(results).to.eql({
+        "app": {
+          "name": "Cluster"
+        },
+        "version": "v0.1.2",
+        "cluster": "kubernetes"
+      })
+    })
   })
 
 });

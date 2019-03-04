@@ -2,14 +2,14 @@
 kind: PodDisruptionBudget
 apiVersion: policy/v1beta1
 metadata:
-  name: {{name}}
-  namespace: {{namespace}}
+  name: {{onboarding.name}}
+  namespace: {{onboarding.namespace}}
   labels:
-    app: {{name}}
-    repo: {{repo}}
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}
 spec:
   minAvailable: 1
   selector:
     matchLabels:
-      app: {{name}}
-      repo: {{repo}}
+      app: {{onboarding.name}}
+      repo: {{onboarding.repo}}
