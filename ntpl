@@ -1,18 +1,14 @@
 #!/usr/bin/env node
 
 const ntpl = require('commander'),
-    Mustache = require('mustache'),
-    utils = require('./utils/utility'),
     parser = require('./utils/parser'),
-    merge = require('deepmerge'),
-    supportList = ['yaml', 'yml'],
-    buildPath = '_build'
+    core = require('./utils/core')
 
 ntpl
-  .version('0.4.1', '-v, --version')
-  .option('-c, --components [value]', 'kubernetes components', componentReader, [])
-  .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parameterReader, [])
-  .option('-k, --keyPairs [value]', 'Key=Value Parameter', keyReader, [])
+  .version('0.4.2', '-v, --version')
+  .option('-c, --components [value]', 'kubernetes components', parser.componentReader, [])
+  .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parser.parameterReader, [])
+  .option('-k, --keyPairs [value]', 'Key=Value Parameter', parser.keyReader, [])
   .option('-t, --template <file>', 'template file')
   .option('-o, --output <file>', 'output file')
 
@@ -20,108 +16,36 @@ ntpl
   .command('compile')
   .description('Compile Kubernetes component templates.')
   .action(() => {
-    kubeCompile()
+    core.kubeCompile(ntpl)
   })
 
 ntpl
   .command('validate')
   .description('Validate Kubernetes component templates.')
   .action(() => {
-    kubeCompile()
-    kubeValidate(ntpl.components)
+    core.kubeValidate(ntpl)
   })
 
 ntpl
   .command('apply')
   .description('Apply Kubernetes component templates into kubernetes.')
   .action(() => {
-    kubeCompile()
-    kubeApply(ntpl.components)
+    core.kubeApply(ntpl)
   })
 
 ntpl
   .command('delete')
   .description('Delete Kubernetes component resources from kubernetes')
   .action(() => {
-    kubeCompile()
-    kubeDelete(ntpl.components)
+    core.kubeDelete(ntpl)
   })
 
 ntpl
   .command('render')
   .description('Generate template')
   .action(() => {
-    templateRender(ntpl.template)
+    core.templateRender(ntpl)
   })
 
 ntpl
   .parse(process.argv)
-
-function templateRender(file) {
-  const fileContent = utils.readfile(file),
-        params = getParameters()
-  utils.appendFile(ntpl.output, Mustache.render(fileContent, params))
-}
-
-function parameterReader(filePath, fileList) {
-  if (parser.isInSupportList(filePath, supportList)) {
-    fileList.push(filePath)
-  }
-  return fileList
-}
-
-function keyReader(keypair, keyslist) {
-  keyslist.push(keypair)
-  return keyslist
-}
-
-function componentReader(component, componentsList){
-  componentsList.push(component)
-  return componentsList
-}
-
-function getParameters() {
-  const fileParams = parser.parameterBuilder(ntpl.parameters)
-  const keyParams = parser.keyBuilder(ntpl.keyPairs)
-  return merge(fileParams, keyParams)
-}
-
-function kubeCompile() {
-
-  const params = getParameters(),
-        components = ntpl.components
-  // Clean build folder
-  utils.rmdir(buildPath)
-  components.map(component => utils.mkdir(`${process.cwd()}/${buildPath}/${component}`))
-
-  // Compile Components From Templates Folder to Build Folder
-  components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/templates/${component}`)
-    files.map(file => {
-      const fileContent = utils.readfile(file)
-      utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
-    })
-  })
-
-}
-
-function kubeValidate(components) {
-  components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl apply --validate --dry-run -f ${file}`))
-  })
-}
-
-function kubeApply(components) {
-  components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl apply -f ${file}`))
-  })
-}
-
-function kubeDelete(components) {
-  components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl delete -f ${file}`))
-  })
-}

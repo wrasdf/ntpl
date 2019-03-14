@@ -1,7 +1,7 @@
 ---
 app:
   name: ntpl-demo
-  namespace: platfrom
+  namespace: platform
   logtail:
     app: tail-name
     component: kube-logging

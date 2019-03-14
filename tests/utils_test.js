@@ -6,11 +6,18 @@ const utils = require('../utils/utility');
 describe('utils functions', () => {
 
   describe(`yamlParser`, () => {
+
     it(`should parse yaml correctly`, () => {
       objects = utils.yamlParser(`${__dirname}/files/params1.yaml`)
       expect(objects.app).to.have.property("name");
       expect(objects.app).to.have.property("namespace");
     });
+
+    it(`should parse empty yaml correctly`, () => {
+      objects = utils.yamlParser(`${__dirname}/files/empty.yaml`)
+      expect(objects).to.eqls({});
+    });
+
   })
 
 

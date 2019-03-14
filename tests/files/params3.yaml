@@ -1,0 +1,7 @@
+---
+app:
+  name: kube-node
+  runtime: !!js/function |
+    function (){
+      return "Hello World"
+    }

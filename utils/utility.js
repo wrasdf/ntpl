@@ -18,15 +18,8 @@ function rmdir(directory) {
 }
 
 function yamlParser(filePath) {
-  return yaml.load(readfile(filePath), 'utf8')
+  return yaml.load(readfile(filePath), 'utf8') || {}
 }
-
-
-var initialValue = 0;
-var sum = [{x: 1}, {x: 2}, {x: 3}].reduce(
-    (accumulator, currentValue) => accumulator + currentValue.x
-    ,initialValue
-);
 
 function keyParser(keypair) {
   const results = {}
