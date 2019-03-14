@@ -86,11 +86,21 @@ runtime: !!js/function |
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -k "name=cluster" -k "v=v0.2.3" -c "onboarding"
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate \
+ -p "envs/default.yaml" \
+ -p "envs/doris.yaml" \
+ -k "name=cluster" \
+ -k "v=v0.2.3" \
+ -c "onboarding"
 ```
 
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render -p "envs/default.yaml" -p "envs/doris.yaml" -k "app.version=v.1.0.3" -t "tmp.yaml" -o test.yaml
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render \
+ -p "envs/default.yaml" \
+ -p "envs/doris.yaml" \
+ -k "app.version=v.1.0.3" \
+ -t "tmp.yaml" \
+ -o test.yaml
 ```
