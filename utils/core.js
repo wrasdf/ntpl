@@ -56,5 +56,8 @@ function kubeDelete(ntpl) {
 
 module.exports = {
   templateRender,
-  kubeCompile
+  kubeCompile,
+  kubeValidate,
+  kubeApply,
+  kubeDelete
 }
