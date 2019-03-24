@@ -49,7 +49,7 @@ function readfile(path) {
 }
 
 function appendFile(path, content) {
-  return fs.appendFileSync(path, content, 'utf8');
+  return fs.writeFileSync(path, content, 'utf8');
 }
 
 module.exports = {
