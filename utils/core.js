@@ -24,7 +24,9 @@ function kubeCompile(ntpl) {
     const files = utils.readdir(`${process.cwd()}/templates/${component}`)
     files.map(file => {
       const fileContent = utils.readfile(file)
-      utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
+      if (fileContent) {
+        utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
+      }
     })
   })
 
@@ -33,24 +35,21 @@ function kubeCompile(ntpl) {
 function kubeValidate(ntpl) {
   kubeCompile(ntpl)
   ntpl.components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl apply --validate --dry-run -f ${file}`))
+    utils.exec(`kubectl apply --validate --dry-run -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 
 function kubeApply(ntpl) {
   kubeCompile(ntpl)
   ntpl.components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl apply -f ${file}`))
+    utils.exec(`kubectl apply -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 
 function kubeDelete(ntpl) {
   kubeCompile(ntpl)
   ntpl.components.map(component => {
-    const files = utils.readdir(`${process.cwd()}/${buildPath}/${component}`)
-    files.map(file => utils.exec(`kubectl delete -f ${file}`))
+    utils.exec(`kubectl delete -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 

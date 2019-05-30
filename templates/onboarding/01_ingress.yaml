@@ -7,13 +7,13 @@ metadata:
   labels:
     app: {{onboarding.name}}
     repo: {{onboarding.repo}}
-  # annotations:
-  #   certmanager.k8s.io/cluster-issuer: letsencrypt-staging
+  annotations:
+    kubernetes.io/tls-acme: "true"
 spec:
-  # tls:
-  # - hosts:
-  #   - {{onboarding.dns_name}}
-  #   secretName: {{onboarding.name}}-tls
+  tls:
+  - hosts:
+    - {{onboarding.dns_name}}
+    secretName: {{onboarding.name}}-tls
   rules:
   - host: {{onboarding.dns_name}}
     http:

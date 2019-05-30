@@ -1,3 +1,4 @@
 ---
 onboarding:
-  container: ikerry/node-metrics
+  container: ikerry/metrics-node
+  version: v0.1.6

@@ -1,0 +1,15 @@
+{{#onboarding.istio.enable}}
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{onboarding.name}}
+  labels:
+    app: {{onboarding.name}}
+    repo: {{onboarding.repo}}
+spec:
+  host: {{onboarding.name}}.{{onboarding.namespace}}.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+{{/onboarding.istio.enable}}

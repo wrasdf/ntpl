@@ -5,7 +5,7 @@ const ntpl = require('commander'),
     core = require('./utils/core')
 
 ntpl
-  .version('0.4.2', '-v, --version')
+  .version('0.4.3', '-v, --version')
   .option('-c, --components [value]', 'kubernetes components', parser.componentReader, [])
   .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parser.parameterReader, [])
   .option('-k, --keyPairs [value]', 'Key=Value Parameter', parser.keyReader, [])

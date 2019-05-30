@@ -5,8 +5,10 @@ runtime: !!js/function |
   }
 
 onboarding:
-  name: onboarding
+  name: node5
   namespace: platform
-  repo: kube-aliyun
+  repo: ntpl
   containerPort: 8080
-  dns_name: api.manyuenergy.com
+  dns_name: your.domain.com.au
+  istio:
+    enable: false
