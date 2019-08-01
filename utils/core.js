@@ -25,7 +25,10 @@ function kubeCompile(ntpl) {
     files.map(file => {
       const fileContent = utils.readfile(file)
       if (fileContent) {
-        utils.appendFile(file.replace(/templates/, buildPath), Mustache.render(fileContent, params))
+        const renderContent = Mustache.render(fileContent, params)
+        if (renderContent) {
+            utils.appendFile(file.replace(/templates/, buildPath), renderContent)
+        }
       }
     })
   })

@@ -3,7 +3,7 @@ FROM node:11.9.0-alpine
 RUN apk --update add curl bash \
   && rm -rf /var/cache/apk/*
 
-ENV KUBECTLVERSION v1.13.3
+ENV KUBECTLVERSION v1.15.0
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTLVERSION}/bin/linux/amd64/kubectl
 RUN chmod +x kubectl
 RUN mv kubectl /usr/local/bin/
