@@ -9,8 +9,8 @@ RUN chmod +x kubectl
 RUN mv kubectl /usr/local/bin/
 
 WORKDIR /app
-COPY package*.json /app/
-RUN npm install
+COPY package.json yarn.lock /app/
+RUN yarn install
 COPY . /app/
 RUN chmod +x ntpl && \
     cp ntpl /usr/local/bin/ && \
