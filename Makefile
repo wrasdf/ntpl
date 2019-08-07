@@ -7,14 +7,17 @@ push-%: build
 	docker push ikerry/ntpl:$(*)
 	docker push ikerry/ntpl:latest
 
-sh: build
-	docker run -it -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -v /app/node_modules -w /app --entrypoint "/bin/bash" ntpl:latest
+sh:
+	@docker-compose build sh
+	@docker-compose run sh
 
-test: build
-	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -v /app/node_modules -w /app --entrypoint="/bin/bash" ntpl:latest -c "yarn test"
+test:
+	@docker-compose build test
+	@docker-compose run test
 
 validate: build
-	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -v /app/node_modules -w /app ntpl:latest validate -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding" -c "debug"
+	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest validate -p "envs/default.yaml" -p "envs/preprod.yaml" -c "onboarding" -c "debug"
+
 
 compile: build
-	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -v /app/node_modules -w /app ntpl:latest compile -p "envs/default.yaml" -p "envs/doris.yaml" -c "onboarding" -c "debug"
+	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest compile -p "envs/default.yaml" -p "envs/preprod.yaml" -c "onboarding" -c "debug"
