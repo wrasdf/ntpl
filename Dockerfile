@@ -1,8 +1,8 @@
 FROM node:12-alpine AS builder
 WORKDIR /app
 COPY package.json yarn.lock /app/
-COPY . /app/
 RUN yarn install
+COPY . /app/
 RUN yarn run pkg
 
 FROM alpine:3.10
