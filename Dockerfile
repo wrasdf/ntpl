@@ -1,6 +1,12 @@
-FROM node:12-alpine
+FROM node:12-alpine AS builder
+WORKDIR /app
+COPY package.json yarn.lock /app/
+COPY . /app/
+RUN yarn install
+RUN yarn run pkg
 
-RUN apk --update add curl bash \
+FROM alpine:3.10
+RUN apk --update add --no-cache libstdc++ libgcc curl bash \
   && rm -rf /var/cache/apk/*
 
 ENV KUBECTLVERSION v1.15.0
@@ -9,12 +15,7 @@ RUN chmod +x kubectl
 RUN mv kubectl /usr/local/bin/
 
 WORKDIR /app
-COPY package.json yarn.lock /app/
-RUN yarn install
-COPY . /app/
-RUN chmod +x ntpl && \
-    cp ntpl /usr/local/bin/ && \
-    cp -r utils /usr/local/bin/ && \
-    cp -r node_modules /usr/local/bin/
+COPY --from=builder /app/pkg/ntpl /usr/local/bin
+RUN chmod +x /usr/local/bin/ntpl
 
 ENTRYPOINT ["ntpl"]

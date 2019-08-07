@@ -6,8 +6,8 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 ## What's inside the Docker image
 
-- node:11.9.0-alpine
-- ntpl:0.4.4
+- node:12-alpine
+- ntpl:v1.0.0
 - kubectl:1.15.0
 
 ## Synopsis
@@ -88,7 +88,7 @@ runtime: !!js/function |
 ```
 docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest validate \
  -p "envs/default.yaml" \
- -p "envs/doris.yaml" \
+ -p "envs/preprod.yaml" \
  -k "name=cluster" \
  -k "v=v0.2.3" \
  -c "onboarding"
@@ -99,7 +99,7 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest
 ```
 docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:latest render \
  -p "envs/default.yaml" \
- -p "envs/doris.yaml" \
+ -p "envs/preprod.yaml" \
  -k "app.version=v.1.0.3" \
  -t "tmp.yaml" \
  -o test.yaml

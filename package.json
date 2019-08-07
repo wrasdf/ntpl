@@ -1,10 +1,11 @@
 {
   "name": "ntpl",
-  "version": "0.4.4",
+  "version": "1.0.0",
   "description": "nodejs kubernetes template engine",
   "main": "ntpl",
   "scripts": {
-    "test": "./node_modules/.bin/mocha ./tests/*.js"
+    "test": "./node_modules/.bin/mocha ./tests/*.js",
+    "pkg": "pkg . --targets node12-alpine-x64 --out-path pkg"
   },
   "keywords": [
     "node",
@@ -37,6 +38,7 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "rewire": "^4.0.1",
-    "sinon": "^7.3.2"
+    "sinon": "^7.3.2",
+    "pkg": "^4.4.0"
   }
 }

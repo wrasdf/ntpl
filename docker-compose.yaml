@@ -1,0 +1,23 @@
+---
+version: '3.6'
+
+services:
+
+  test: &base
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    working_dir: /app
+    volumes:
+      - ".:/app"
+      - /app/node_modules
+      - "$HOME/.kube:/root/.kube"
+    entrypoint:
+      - yarn
+      - run
+      - test
+
+  sh:
+    <<: *base
+    entrypoint:
+      - "bash"
