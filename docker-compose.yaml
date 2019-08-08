@@ -21,3 +21,10 @@ services:
     <<: *base
     entrypoint:
       - "bash"
+
+  ntpl:
+    image: ikerry/ntpl:latest
+    working_dir: /app
+    volumes:
+      - ".:/app"
+      - "$HOME/.kube:/root/.kube"

@@ -15,9 +15,5 @@ test:
 	@docker-compose build test
 	@docker-compose run test
 
-validate: build
-	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest validate -p "envs/default.yaml" -p "envs/preprod.yaml" -c "onboarding" -c "debug"
-
-
-compile: build
-	docker run --rm -v $(shell pwd):/app -v $(HOME)/.kube:/root/.kube -w /app ntpl:latest compile -p "envs/default.yaml" -p "envs/preprod.yaml" -c "onboarding" -c "debug"
+compile:
+	@docker-compose run ntpl compile -p "envs/default.yaml" -p "envs/preprod.yaml" -c "onboarding" -c "debug"
