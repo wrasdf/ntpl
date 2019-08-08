@@ -23,7 +23,7 @@ services:
       - "bash"
 
   ntpl:
-    image: ikerry/ntpl:latest
+    image: ikerry/ntpl:v1.0.1
     working_dir: /app
     volumes:
       - ".:/app"
