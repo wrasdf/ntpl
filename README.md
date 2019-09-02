@@ -1,4 +1,4 @@
-# Ntpl
+# Ntpl [![CircleCI](https://circleci.com/gh/wrasdf/ntpl/tree/master.svg?style=svg)](https://circleci.com/gh/wrasdf/ntpl/tree/master)
 
 Ntpl is a tool for processing Kubernetes manifest templates.
 
