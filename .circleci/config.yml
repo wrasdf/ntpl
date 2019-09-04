@@ -5,9 +5,9 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Unit Test
-        command: |
-          make test
+          name: Unit Test
+          command: |
+            make test
 
   deploy:
     machine: true
