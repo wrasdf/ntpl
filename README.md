@@ -6,7 +6,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 ## What's inside the Docker image
 
-- ntpl:v1.0.1
+- ntpl
 - kubectl:1.15.0
 
 ## Synopsis
@@ -15,7 +15,6 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 Usage: ntpl [options] [command]
 
 Options:
-  -v, --version             output the version number
   -c, --components [value]  kubernetes components (default: [])
   -p, --parameters [value]  parameters file (yaml|yml) (default: [])
   -k, --keyPairs [value]    Key=Value Parameter (default: [])
