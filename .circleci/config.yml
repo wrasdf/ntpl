@@ -4,9 +4,10 @@ jobs:
     machine: true
     steps:
       - checkout
-      name: Unit Test
-      command: |
-        make test
+      - run:
+        name: Unit Test
+        command: |
+          make test
 
   deploy:
     machine: true
