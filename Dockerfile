@@ -14,6 +14,10 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL
 RUN chmod +x kubectl
 RUN mv kubectl /usr/local/bin/
 
+ENV AWSIAMAUTHENTICATOR 0.4.0
+RUN curl -L https://github.com/kubernetes-sigs/aws-iam-authenticator/releases/download/v${AWSIAMAUTHENTICATOR}/aws-iam-authenticator_${AWSIAMAUTHENTICATOR}_linux_amd64 -o /usr/local/bin/aws-iam-authenticator
+RUN chmod +x /usr/local/bin/aws-iam-authenticator
+
 WORKDIR /app
 COPY --from=builder /app/pkg/ntpl /usr/local/bin
 RUN chmod +x /usr/local/bin/ntpl
