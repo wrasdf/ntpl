@@ -21,10 +21,10 @@ jobs:
 
 workflows:
   version: 2
-  untagged-build:
+  any-commit:
     jobs:
       - ut
-  tagged-build:
+  release-tag:
     jobs:
       - deploy:
           context: Docker
