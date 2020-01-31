@@ -2,7 +2,7 @@ ARG KUBE_VERSION=1.17.2
 ARG AWSIAMAUTHENTICATOR_VERSION=0.5.0
 
 FROM lachlanevenson/k8s-kubectl:v${KUBE_VERSION} AS kubectl
-FROM ikerry/aws-iam-authenticator:v{AWSIAMAUTHENTICATOR_VERSION} AS authenticator
+FROM ikerry/aws-iam-authenticator:v${AWSIAMAUTHENTICATOR_VERSION} AS authenticator
 FROM node:12-alpine
 
 RUN apk --update add curl bash \
