@@ -8,7 +8,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 - ntpl
 - aws-iam-authenticator 0.5.0
-- kubectl 1.15.9 1.16.6 1.17.2
+- kubectl (1.15.9 1.16.6 1.17.2 within tagged images)
 
 ## Synopsis
 
