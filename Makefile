@@ -1,11 +1,7 @@
-build:
-	docker build -t ntpl:latest .
+.PHONY: sh test compile
 
-push-%: build
-	docker tag ntpl:latest ikerry/ntpl:$(*)
-	docker tag ntpl:latest ikerry/ntpl:latest
-	docker push ikerry/ntpl:$(*)
-	docker push ikerry/ntpl:latest
+push-%:
+	./bin/build.sh $(*)
 
 sh:
 	@docker-compose build sh
