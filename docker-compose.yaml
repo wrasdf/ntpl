@@ -23,8 +23,10 @@ services:
       - "bash"
 
   ntpl:
-    image: ikerry/ntpl:v1.0.1
+    image: ikerry/ntpl:1.2.0-k8sv1.17.2
     working_dir: /app
+    entrypoint:
+      - "bash"
     volumes:
       - ".:/app"
       - "$HOME/.kube:/root/.kube"
