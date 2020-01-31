@@ -23,7 +23,7 @@ services:
       - "bash"
 
   ntpl:
-    image: ikerry/ntpl:1.2.0-k8sv1.17.2
+    image: ikerry/ntpl:v1.2.2-k8sv1.17.2
     working_dir: /app
     entrypoint:
       - "bash"
