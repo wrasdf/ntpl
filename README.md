@@ -8,7 +8,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 
 - ntpl
 - aws-iam-authenticator 0.5.0
-- kubectl (1.15.9 1.16.6 1.17.2 within tagged images)
+- kubectl (v1.15.9, v1.16.6, v1.17.2 within tagged images)
 
 ## Synopsis
 
@@ -34,7 +34,7 @@ Commands:
 ## Docker image
 
 ```
-docker pull ikerry/ntpl:1.2.0-k8sv1.16.6
+docker pull ikerry/ntpl:v1.2.2-k8sv1.16.6
 ```
 
 ## Quick start
@@ -85,7 +85,7 @@ runtime: !!js/function |
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:1.2.0-k8sv1.16.6 validate \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.2.2-k8sv1.16.6 validate \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "name=cluster" \
@@ -96,7 +96,7 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:1.2.0-
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:1.2.0-k8sv1.16.6 render \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.2.2-k8sv1.16.6 render \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "app.version=v.1.0.3" \

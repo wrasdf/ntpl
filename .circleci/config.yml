@@ -24,7 +24,7 @@ workflows:
   any-commit:
     jobs:
       - ut
-  release-tag:
+  release:
     jobs:
       - deploy:
           context: Docker
