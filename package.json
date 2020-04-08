@@ -28,7 +28,7 @@
     "ntpl": "./ntpl"
   },
   "dependencies": {
-    "commander": "^2.19.0",
+    "commander": "^5.0.0",
     "deepmerge": "^3.2.0",
     "js-yaml": "^3.13.1",
     "mustache": "^3.0.1",
