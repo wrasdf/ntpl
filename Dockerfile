@@ -20,7 +20,7 @@ COPY --from=kubectl /usr/local/bin/kubectl /usr/bin/
 COPY --from=authenticator /usr/local/bin/aws-iam-authenticator /usr/bin/
 
 WORKDIR /app
-# COPY --from=builder /app/pkg/ntpl /usr/local/bin
-# RUN chmod +x /usr/local/bin/ntpl
+COPY --from=builder /app/pkg/ntpl /usr/local/bin
+RUN chmod +x /usr/local/bin/ntpl
 
 ENTRYPOINT ["ntpl"]
