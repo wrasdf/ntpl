@@ -1,7 +1,9 @@
+---
 version: 2.1
 jobs:
   ut:
-    machine: true
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
@@ -10,7 +12,8 @@ jobs:
             make test
 
   deploy:
-    machine: true
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
