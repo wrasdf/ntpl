@@ -30,7 +30,7 @@
   "dependencies": {
     "commander": "^6.2.0",
     "deepmerge": "^4.2.2",
-    "js-yaml": "^3.14.0",
+    "js-yaml": "^3.14.1",
     "mustache": "^4.1.0",
     "shelljs": "^0.8.4"
   },
