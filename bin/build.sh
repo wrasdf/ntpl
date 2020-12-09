@@ -3,7 +3,7 @@ set -e
 
 VERSION=$1
 IMAGE=ikerry/ntpl
-KUBE_VERSION_LIST=(1.18.12 1.19.4 1.20.0)
+KUBE_VERSION_LIST=(1.18.10 1.19.3)
 AUTHENTICATOR=0.5.2
 
 builder () {

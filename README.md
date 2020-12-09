@@ -9,7 +9,7 @@ It is a very simple client-side implementation of the Templates + Parameters pro
 - ntpl
 - aws-iam-authenticator 0.5.2
 - awscli 2.0.59
-- kubectl (v1.18.12 v1.19.4 v1.20.0 within tagged images)
+- kubectl (v1.18.10 v1.19.3 within tagged images)
 
 ## Synopsis
 
@@ -35,7 +35,7 @@ Commands:
 ## Docker image
 
 ```
-docker pull ikerry/ntpl:v1.3.5-k8sv1.19.4
+docker pull ikerry/ntpl:v1.3.6-k8sv1.19.3
 ```
 
 ## Quick start
@@ -86,7 +86,7 @@ runtime: !!js/function |
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.5-k8sv1.19.4 validate \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.6-k8sv1.19.3 validate \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "name=cluster" \
@@ -97,7 +97,7 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.5
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.5-k8sv1.19.4 render \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.6-k8sv1.19.3 render \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "app.version=v.1.0.3" \
