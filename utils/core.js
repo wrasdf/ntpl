@@ -38,7 +38,7 @@ function kubeCompile(ntpl) {
 function kubeValidate(ntpl) {
   kubeCompile(ntpl)
   ntpl.components.map(component => {
-    utils.exec(`kubectl apply --validate --dry-run -f ${process.cwd()}/${buildPath}/${component}`)
+    utils.exec(`kubectl apply --validate --dry-run=client -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 
