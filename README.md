@@ -35,7 +35,7 @@ Commands:
 ## Docker image
 
 ```
-docker pull ikerry/ntpl:v1.3.6-k8sv1.19.3
+docker pull ikerry/ntpl:v1.3.7-k8sv1.19.3
 ```
 
 ## Quick start
@@ -86,7 +86,7 @@ runtime: !!js/function |
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.6-k8sv1.19.3 validate \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.7-k8sv1.19.3 validate \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "name=cluster" \
@@ -97,7 +97,7 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.6
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.6-k8sv1.19.3 render \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.7-k8sv1.19.3 render \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "app.version=v.1.0.3" \
