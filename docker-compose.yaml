@@ -1,5 +1,5 @@
 ---
-version: '3.2'
+version: '3.7'
 
 services:
 
@@ -23,7 +23,7 @@ services:
       - "bash"
 
   ntpl:
-    image: ikerry/ntpl:v1.2.2-k8sv1.17.2
+    image: ikerry/ntpl:v1.3.2-k8sv1.19.4
     working_dir: /app
     entrypoint:
       - "bash"
