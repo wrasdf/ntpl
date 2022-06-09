@@ -20,8 +20,8 @@ services:
 
   sh:
     <<: *base
-    entrypoint:
-      - "bash"
+    entrypoint: 
+      - "sh"
 
   test: 
     <<: *base
@@ -31,13 +31,12 @@ services:
       - test
 
   ntpl:
-    <<: *base
-    build:
-      context: .
-      target: release
-      args:
-        - KUBE_VERSION=v1.20.15
-        - AWSIAMAUTHENTICATOR_VERSION=v0.5.7
-    image: ikerry/ntpl:v2.0.1-k8sv1.20.15
+    working_dir: /app
+    platform: linux/amd64
+    image: ikerry/ntpl:v2.1.1-k8sv1.20.15
+    volumes:
+      - "$HOME/.aws:/root/.aws"
+      - "$HOME/.kube:/root/.kube"
+      - ".:/app"
     entrypoint: 
       - "bash"

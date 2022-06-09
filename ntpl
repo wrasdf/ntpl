@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
-const ntpl = require('commander'),
+const { Command } = require('commander');
+const ntpl = new Command()
     parser = require('./utils/parser'),
     core = require('./utils/core')
 
 ntpl
-  .option('-c, --components [value]', 'kubernetes components', parser.componentReader, [])
-  .option('-p, --parameters [value]', 'parameters file (yaml|yml)', parser.parameterReader, [])
-  .option('-k, --keyPairs [value]', 'Key=Value Parameter', parser.keyReader, [])
+  .option('-c, --components <value>', 'kubernetes components', parser.componentReader, [])
+  .option('-p, --parameters <value>', 'parameters file (yaml|yml)', parser.parameterReader, [])
+  .option('-k, --keyPairs <value>', 'Key=Value Parameter', parser.keyReader, [])
   .option('-t, --template <file>', 'template file')
   .option('-o, --output <file>', 'output file')
 

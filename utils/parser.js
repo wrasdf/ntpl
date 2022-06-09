@@ -14,7 +14,7 @@ function _isInSupportList(filePath, list) {
 }
 
 function _parameterBuilder(files) {
-  return files.filter(file => _isInSupportList(file, ["yaml", "yml"]))
+  return files.filter(file => _isInSupportList(file, supportList))
     .map(file => utils.yamlParser(file))
     .reduce((accumulator, currentValue) => merge(accumulator, currentValue), {})
 }
@@ -25,26 +25,25 @@ function _keyBuilder(keypairs) {
 }
 
 function getParameters(ntpl) {
-  const fileParams = _parameterBuilder(ntpl.parameters)
-  const keyParams = _keyBuilder(ntpl.keyPairs)
+  const opts = ntpl.opts()
+  const fileParams = _parameterBuilder(opts.parameters)
+  const keyParams = _keyBuilder(opts.keyPairs)
   return merge(fileParams, keyParams)
 }
 
 function parameterReader(filePath, fileList) {
   if (_isInSupportList(filePath, supportList)) {
-    fileList.push(filePath)
+    return fileList.concat([filePath]);
   }
-  return fileList
+  return fileList;
 }
 
-function keyReader(keypair, keyslist) {
-  keyslist.push(keypair)
-  return keyslist
+function keyReader(keypair, keypairs) {
+  return keypairs.concat([keypair]);
 }
 
 function componentReader(component, componentsList){
-  componentsList.push(component)
-  return componentsList
+  return componentsList.concat([component]);
 }
 
 

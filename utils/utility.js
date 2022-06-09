@@ -27,14 +27,13 @@ function keyParser(keypair) {
   if (pairArr[1]) {
     const keyArr = pairArr[0].split('.')
     keyArr.reduce(
-      (accumulator, currentValue, index) => {
-        accumulator[currentValue] = {}
+      (previousValue, currentValue, index) => {
+        previousValue[currentValue] = {}
         if (index === keyArr.length-1) {
-          accumulator[currentValue] = pairArr[1]
+          previousValue[currentValue] = pairArr[1]
         }
-        return accumulator[currentValue]
-      }
-      , results
+        return previousValue[currentValue]
+      }, results
     )
   }
   return results

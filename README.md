@@ -1,4 +1,4 @@
-# Ntpl [![CircleCI](https://circleci.com/gh/wrasdf/ntpl/tree/master.svg?style=svg)](https://circleci.com/gh/wrasdf/ntpl/tree/master)
+# Ntpl
 
 Ntpl is a tool for processing Kubernetes manifest templates.
 
@@ -34,7 +34,7 @@ Commands:
 ## Docker image
 
 ```
-docker pull ikerry/ntpl:v1.3.7-k8sv1.19.3
+docker pull ikerry/ntpl:v2.0.1-k8sv1.20.15
 ```
 
 ## Quick start
@@ -76,16 +76,12 @@ name: kube-demo
 namespace: kube-demo
 service: kube-demo-app
 cluster: cluster.com.au
-runtime: !!js/function |
-  function (){
-    return "Hello World"
-  }
 ```
 
 - Validate Kubernetes component templates
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.7-k8sv1.19.3 validate \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v2.0.1-k8sv1.20.15 validate \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "name=cluster" \
@@ -96,7 +92,7 @@ docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.7
 - Render template
 
 ```
-docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v1.3.7-k8sv1.19.3 render \
+docker run --rm -v $(pwd):/app -v ~/.kube:/root/.kube -w /app ikerry/ntpl:v2.0.1-k8sv1.20.15 render \
  -p "envs/default.yaml" \
  -p "envs/preprod.yaml" \
  -k "app.version=v.1.0.3" \

@@ -1,8 +1,5 @@
 ---
-runtime: !!js/function |
-  function (){
-    return "Hello World"
-  }
+runtime: "Hello World"
 
 onboarding:
   name: node5

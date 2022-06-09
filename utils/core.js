@@ -14,7 +14,7 @@ function templateRender(ntpl) {
 
 function kubeCompile(ntpl) {
   const params = parser.getParameters(ntpl),
-        components = ntpl.components
+        components = ntpl.opts().components
   // Clean build folder
   utils.rmdir(buildPath)
   components.map(component => utils.mkdir(`${process.cwd()}/${buildPath}/${component}`))
@@ -37,21 +37,21 @@ function kubeCompile(ntpl) {
 
 function kubeValidate(ntpl) {
   kubeCompile(ntpl)
-  ntpl.components.map(component => {
+  ntpl.opts().components.map(component => {
     utils.exec(`kubectl apply --validate --dry-run=client -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 
 function kubeApply(ntpl) {
   kubeCompile(ntpl)
-  ntpl.components.map(component => {
+  ntpl.opts().components.map(component => {
     utils.exec(`kubectl apply -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
 
 function kubeDelete(ntpl) {
   kubeCompile(ntpl)
-  ntpl.components.map(component => {
+  ntpl.opts().components.map(component => {
     utils.exec(`kubectl delete -f ${process.cwd()}/${buildPath}/${component}`)
   })
 }
