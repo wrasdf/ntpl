@@ -3,8 +3,8 @@ set -e
 
 VERSION=$1
 IMAGE=ikerry/ntpl
-KUBE_VERSION_LIST=(1.18.10 1.19.3)
-AUTHENTICATOR=0.5.2
+KUBE_VERSION_LIST=(v1.20.15 v1.21.11 v1.22.8 v1.23.5)
+AUTHENTICATOR=v0.5.7
 
 builder () {
 
@@ -16,7 +16,8 @@ builder () {
   docker build \
     --build-arg KUBE_VERSION=${KUBE_VERSION} \
     --build-arg AWSIAMAUTHENTICATOR_VERSION=${AUTHENTICATOR} \
-    -t ikerry/ntpl:${NTPL_VERSION}-k8sv${KUBE_VERSION} .
+    --target release \
+    --tag ikerry/ntpl:${NTPL_VERSION}-k8sv${KUBE_VERSION} .
 
   docker push ikerry/ntpl:${NTPL_VERSION}-k8sv${KUBE_VERSION}
 

@@ -5,11 +5,10 @@ Ntpl is a tool for processing Kubernetes manifest templates.
 It is a very simple client-side implementation of the Templates + Parameters proposal.
 
 ## What's inside the Docker image
-
 - ntpl
-- aws-iam-authenticator 0.5.2
-- awscli 2.0.59
-- kubectl (v1.18.10 v1.19.3 within tagged images)
+- awscli
+- aws-iam-authenticator 0.5.7
+- kubectl (v1.20.15 v1.21.11 v1.22.8 v1.23.5 within tagged images)
 
 ## Synopsis
 

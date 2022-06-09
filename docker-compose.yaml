@@ -3,30 +3,41 @@ version: '3.7'
 
 services:
 
-  test: &base
+  x-default: &base
     build:
       context: .
-      dockerfile: Dockerfile-dev
+      target: dev
+      args:
+        - KUBE_VERSION=v1.20.15
+        - AWSIAMAUTHENTICATOR_VERSION=v0.5.7
     working_dir: /app
+    platform: linux/amd64
     volumes:
-      - ".:/app"
-      - /app/node_modules
+      - "$HOME/.aws:/root/.aws"
       - "$HOME/.kube:/root/.kube"
-    entrypoint:
-      - yarn
-      - run
-      - test
+      - /app/node_modules
+      - ".:/app"
 
   sh:
     <<: *base
     entrypoint:
       - "bash"
 
-  ntpl:
-    image: ikerry/ntpl:v1.3.7-k8sv1.19.3
-    working_dir: /app
+  test: 
+    <<: *base
     entrypoint:
+      - yarn
+      - run
+      - test
+
+  ntpl:
+    <<: *base
+    build:
+      context: .
+      target: release
+      args:
+        - KUBE_VERSION=v1.20.15
+        - AWSIAMAUTHENTICATOR_VERSION=v0.5.7
+    image: ikerry/ntpl:v2.0.1-k8sv1.20.15
+    entrypoint: 
       - "bash"
-    volumes:
-      - ".:/app"
-      - "$HOME/.kube:/root/.kube"
