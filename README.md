@@ -50,7 +50,6 @@ metadata:
   namespace: {{namespace}}
   labels:
     app: {{name}}
-    runtime: {{runtime}}
   annotations:
     kubernetes.io/tls-acme: "true"
 spec:

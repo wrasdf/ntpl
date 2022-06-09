@@ -33,10 +33,8 @@ services:
   ntpl:
     working_dir: /app
     platform: linux/amd64
-    image: ikerry/ntpl:v2.1.1-k8sv1.20.15
+    image: ikerry/ntpl:v2.0.1-k8sv1.20.15
     volumes:
       - "$HOME/.aws:/root/.aws"
       - "$HOME/.kube:/root/.kube"
       - ".:/app"
-    entrypoint: 
-      - "bash"

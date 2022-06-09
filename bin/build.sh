@@ -4,7 +4,7 @@ set -e
 VERSION=$1
 IMAGE=ikerry/ntpl
 # KUBE_VERSION_LIST=(v1.20.15 v1.21.11 v1.22.8 v1.23.5)
-KUBE_VERSION_LIST=(v1.20.15)
+KUBE_VERSION_LIST=(v1.21.11 v1.22.8 v1.23.5)
 AUTHENTICATOR=v0.5.7
 
 builder () {
@@ -14,7 +14,7 @@ builder () {
   KUBE_VERSION=$2
   AUTHENTICATOR=$3
 
-  docker buildx \
+  docker buildx build \
     --build-arg KUBE_VERSION=${KUBE_VERSION} \
     --build-arg AWSIAMAUTHENTICATOR_VERSION=${AUTHENTICATOR} \
     --platform linux/amd64 \
