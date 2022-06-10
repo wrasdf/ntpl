@@ -48,11 +48,22 @@ describe('parser functions', () => {
 
   describe(`parameterReader`, () => {
     it(`should return correct files list`, () => {
-      expect(parser.parameterReader(`params1.yml`, [])).to.eqls(['params1.yml']);
+      const pList = []
+      parser.parameterReader("params1.yml", pList);
+      expect(pList).to.eqls(["params1.yml"]);
+    });
+
+    it(`should return correct files list`, () => {
+      const pList = ["params1.yml"]
+      parser.parameterReader("params2.yml", pList);
+      parser.parameterReader("params3.yml", pList);
+      expect(pList).to.eqls(["params1.yml", "params2.yml", "params3.yml"]);
     });
 
     it(`should ignore unsupport params files`, () => {
-      expect(parser.parameterReader(`params.json`, ['params1.yml', 'params2.yml'])).to.eqls(['params1.yml', 'params2.yml']);
+      const pList = ["params1.yml", "params2.yml"]
+      parser.parameterReader("params.json", pList)
+      expect(pList).to.eqls(["params1.yml", "params2.yml"]);
     });
 
   })
@@ -156,5 +167,6 @@ describe('parser functions', () => {
     })
 
   })
+  
 
 });

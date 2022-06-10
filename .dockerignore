@@ -5,3 +5,4 @@ envs
 _build
 Makefile
 README.md
+.vscode

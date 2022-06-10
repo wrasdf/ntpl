@@ -22,7 +22,7 @@ COPY . /app/
 RUN yarn run pkg
 
 FROM alpine:3.16 AS release
-RUN apk --update add --no-cache libstdc++ libgcc python3 py3-pip curl bash \
+RUN apk --update add --no-cache libstdc++ libgcc python3 py3-pip bash \
   && pip3 install --upgrade pip \
   && pip3 install awscli \
   && rm -rf /var/cache/apk/*

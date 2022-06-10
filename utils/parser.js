@@ -33,19 +33,18 @@ function getParameters(ntpl) {
 
 function parameterReader(filePath, fileList) {
   if (_isInSupportList(filePath, supportList)) {
-    return fileList.concat([filePath]);
+    return fileList.push(filePath);
   }
   return fileList;
 }
 
 function keyReader(keypair, keypairs) {
-  return keypairs.concat([keypair]);
+  return keypairs.push(keypair);
 }
 
 function componentReader(component, componentsList){
-  return componentsList.concat([component]);
+  return componentsList.push(component);
 }
-
 
 module.exports = {
   _isInSupportList,
